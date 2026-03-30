@@ -5,13 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ג'ון פותחטון - פרק 1: שרידות במרתף</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&family=Rubik+Dirt&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&family=Rubik+Dirt&family=Patrick+Hand&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             background: #1a1a2e;
@@ -20,28 +16,12 @@
             padding: 20px;
         }
 
+        /* ===== TITLE ===== */
         .comic-title {
             text-align: center;
             padding: 40px 20px;
             margin-bottom: 30px;
         }
-
-        .comic-title h1 {
-            font-family: 'Rubik Dirt', cursive;
-            font-size: 3.5em;
-            color: #ff6b35;
-            text-shadow: 4px 4px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
-            letter-spacing: 3px;
-            margin-bottom: 10px;
-        }
-
-        .comic-title h2 {
-            font-size: 1.5em;
-            color: #e0e0e0;
-            font-weight: 400;
-            text-shadow: 2px 2px 0 #000;
-        }
-
         .comic-title .chapter {
             display: inline-block;
             background: #ff6b35;
@@ -52,7 +32,22 @@
             font-size: 1em;
             margin-bottom: 15px;
         }
+        .comic-title h1 {
+            font-family: 'Rubik Dirt', cursive;
+            font-size: 3.5em;
+            color: #ff6b35;
+            text-shadow: 4px 4px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+        .comic-title h2 {
+            font-size: 1.5em;
+            color: #e0e0e0;
+            font-weight: 400;
+            text-shadow: 2px 2px 0 #000;
+        }
 
+        /* ===== COMIC PAGES ===== */
         .comic-page {
             max-width: 900px;
             margin: 0 auto 40px;
@@ -64,921 +59,813 @@
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }
 
-        .page-1 {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto auto;
+        .page-1 { grid-template-columns: 1fr 1fr; }
+        .page-2 { grid-template-columns: 1fr 1fr; }
+        .page-3 { grid-template-columns: 1fr 1fr; }
+        .page-4 { grid-template-columns: 1fr 1fr; }
+
+        .page-number {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: #888;
+            font-size: 0.9em;
+            padding: 5px 0;
         }
 
-        .page-2 {
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: auto auto;
-        }
-
-        .page-3 {
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto;
-        }
-
+        /* ===== PANELS ===== */
         .panel {
             position: relative;
             border: 4px solid #000;
             border-radius: 4px;
             overflow: hidden;
-            min-height: 250px;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
+            min-height: 300px;
         }
+        .panel.wide { grid-column: 1 / -1; }
 
-        .panel-scene {
+        .panel-art {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        /* Panel 1 - John introduction */
-        .panel-1 {
-            grid-column: 1 / -1;
-            min-height: 300px;
-            background: linear-gradient(180deg, #87CEEB 0%, #87CEEB 60%, #4a7c59 60%, #3d6b4a 100%);
-        }
-
-        .panel-1 .panel-scene {
-            flex-direction: column;
-        }
-
-        .sun {
+        /* ===== SPEECH BUBBLES — small, above heads ===== */
+        .bubble {
             position: absolute;
-            top: 20px;
-            left: 30px;
-            width: 60px;
-            height: 60px;
-            background: #FFD700;
-            border-radius: 50%;
-            box-shadow: 0 0 30px #FFD700, 0 0 60px rgba(255,215,0,0.3);
-        }
-
-        .john-figure {
-            width: 80px;
-            position: relative;
-            z-index: 2;
-            margin-bottom: -5px;
-        }
-
-        .john-head {
-            width: 50px;
-            height: 50px;
-            background: #FDBCB4;
-            border-radius: 50%;
-            margin: 0 auto;
-            position: relative;
-            border: 3px solid #000;
-        }
-
-        .john-smile {
-            position: absolute;
-            bottom: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 20px;
-            height: 10px;
-            border-bottom: 3px solid #000;
-            border-radius: 0 0 50% 50%;
-        }
-
-        .john-eyes {
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 12px;
-        }
-
-        .john-eye {
-            width: 6px;
-            height: 6px;
-            background: #000;
-            border-radius: 50%;
-        }
-
-        .john-hair {
-            position: absolute;
-            top: -5px;
-            left: -3px;
-            right: -3px;
-            height: 25px;
-            background: #8B4513;
-            border-radius: 50% 50% 0 0;
-            border: 3px solid #000;
-            border-bottom: none;
-        }
-
-        .john-body {
-            width: 40px;
-            height: 50px;
-            background: #4169E1;
-            margin: -5px auto 0;
-            border-radius: 5px 5px 0 0;
-            border: 3px solid #000;
-            position: relative;
-        }
-
-        .john-heart {
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 18px;
-            animation: heartbeat 1.5s infinite;
-        }
-
-        @keyframes heartbeat {
-            0%, 100% { transform: translateX(-50%) scale(1); }
-            50% { transform: translateX(-50%) scale(1.3); }
-        }
-
-        .john-arms {
-            display: flex;
-            justify-content: space-between;
-            width: 70px;
-            margin: -40px auto 0;
-            position: relative;
-            z-index: 1;
-        }
-
-        .john-arm {
-            width: 12px;
-            height: 35px;
-            background: #4169E1;
-            border: 2px solid #000;
-            border-radius: 5px;
-        }
-
-        .john-arm.left { transform: rotate(15deg); }
-        .john-arm.right { transform: rotate(-15deg); }
-
-        .birds {
-            position: absolute;
-            top: 30px;
-            right: 40px;
-        }
-
-        .bird {
-            font-size: 14px;
-            color: #333;
-            animation: fly 3s infinite ease-in-out;
-        }
-
-        .bird:nth-child(2) { margin-right: 15px; animation-delay: 0.5s; }
-
-        @keyframes fly {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-8px); }
-        }
-
-        /* Panel 2 - Parents angry */
-        .panel-2 {
-            background: linear-gradient(180deg, #2c1810 0%, #1a0f08 100%);
-            min-height: 280px;
-        }
-
-        .angry-parents {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            align-items: flex-end;
-            margin-bottom: 30px;
-        }
-
-        .parent-figure {
-            width: 50px;
+            background: #fff;
+            border: 2.5px solid #000;
+            border-radius: 18px;
+            padding: 6px 12px;
+            font-size: 0.78em;
+            font-weight: 700;
+            color: #000;
+            z-index: 20;
+            max-width: 55%;
             text-align: center;
+            line-height: 1.4;
+        }
+        .bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 12px solid #fff;
+        }
+        .bubble::before {
+            content: '';
+            position: absolute;
+            bottom: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0; height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid #000;
+            z-index: -1;
         }
 
-        .parent-head {
-            width: 40px;
-            height: 40px;
-            background: #FDBCB4;
-            border-radius: 50%;
-            margin: 0 auto;
+        .bubble.narrator {
             position: relative;
-            border: 3px solid #000;
+            background: #fffacd;
+            border-color: #DAA520;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 0.82em;
+            margin: 8px auto;
+            max-width: 90%;
+            bottom: auto;
         }
+        .bubble.narrator::after, .bubble.narrator::before { display: none; }
 
-        .angry-brows {
+        .bubble.shout {
+            background: #ff4444;
+            color: #fff;
+            border-color: #990000;
+            font-size: 0.85em;
+            transform: rotate(-2deg);
+        }
+        .bubble.shout::after { border-top-color: #ff4444; }
+
+        .bubble.thought {
+            background: #f0f0f0;
+            border-style: dashed;
+            border-color: #999;
+            font-style: italic;
+            font-weight: 400;
+        }
+        .bubble.thought::after { border-top-color: #f0f0f0; display: none; }
+        .bubble.thought::before { display: none; }
+        /* thought dots */
+        .bubble.thought .dots {
             position: absolute;
-            top: 10px;
+            bottom: -22px;
             left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 8px;
         }
-
-        .brow {
-            width: 10px;
-            height: 3px;
-            background: #000;
+        .bubble.thought .dots span {
+            display: block;
+            width: 8px; height: 8px;
+            background: #ccc;
+            border-radius: 50%;
+            border: 1.5px solid #999;
+            margin: 2px auto;
         }
+        .bubble.thought .dots span:last-child { width: 5px; height: 5px; }
 
-        .brow.left { transform: rotate(25deg); }
-        .brow.right { transform: rotate(-25deg); }
+        .bubble.whisper {
+            background: #eee;
+            border-style: dashed;
+            font-style: italic;
+            font-size: 0.72em;
+            font-weight: 400;
+        }
+        .bubble.whisper::after { border-top-color: #eee; }
 
-        .angry-mouth {
+        /* ===== SFX ===== */
+        .sfx {
             position: absolute;
-            bottom: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 15px;
-            height: 8px;
-            border-top: 3px solid #000;
-            border-radius: 50% 50% 0 0;
+            font-family: 'Rubik Dirt', cursive;
+            z-index: 15;
+            text-shadow: 3px 3px 0 #000;
         }
 
-        .parent-body {
-            width: 35px;
-            height: 45px;
-            margin: -3px auto 0;
-            border-radius: 5px 5px 0 0;
-            border: 3px solid #000;
+        /* ===== HAND-DRAWN CHARACTERS via SVG ===== */
+        svg.character {
+            overflow: visible;
+        }
+        /* Sketchy filter */
+        .sketch-line {
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
-        .parent-body.dad { background: #555; }
-        .parent-body.mom { background: #8B008B; }
-
-        .lightning {
-            position: absolute;
-            top: 10px;
-            font-size: 40px;
-            animation: flash 0.8s infinite alternate;
+        /* ===== ANIMATIONS ===== */
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.25); }
         }
-
-        .lightning:nth-child(1) { right: 15px; }
-        .lightning:nth-child(2) { left: 15px; animation-delay: 0.4s; }
-
         @keyframes flash {
             0% { opacity: 1; }
-            100% { opacity: 0.3; }
+            100% { opacity: 0.2; }
         }
-
-        /* Panel 3 - Basement dark */
-        .panel-3 {
-            background: linear-gradient(180deg, #0a0a0a 0%, #1a1005 50%, #2a1a08 100%);
-            min-height: 280px;
+        @keyframes drip {
+            0%, 100% { opacity: 0; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(12px); }
         }
-
-        .basement-scene {
-            position: relative;
-            width: 100%;
-            height: 100%;
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
         }
-
-        .chains {
-            position: absolute;
-            top: 0;
-            right: 20px;
-            font-size: 30px;
-            opacity: 0.6;
-            animation: swing 2s infinite ease-in-out;
+        @keyframes glow {
+            0%, 100% { opacity: 0.4; transform: translate(-50%,-50%) scale(1); }
+            50% { opacity: 1; transform: translate(-50%,-50%) scale(1.15); }
         }
-
         @keyframes swing {
             0%, 100% { transform: rotate(-5deg); }
             50% { transform: rotate(5deg); }
         }
-
-        .john-basement {
-            position: absolute;
-            bottom: 30px;
-            right: 50%;
-            transform: translateX(50%);
-        }
-
-        .john-basement .john-head {
-            width: 35px;
-            height: 35px;
-        }
-
-        .john-basement .john-body {
-            width: 30px;
-            height: 35px;
-            background: #333;
-        }
-
-        .john-basement .john-hair {
-            background: #6B3410;
-        }
-
-        .mud-puddles {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 30px;
-            background: #3d2b1f;
-            border-top: 3px solid #2a1a0f;
-        }
-
-        .mud-puddle {
-            position: absolute;
-            background: #4a3525;
-            border-radius: 50%;
-            height: 10px;
-        }
-
-        .drip {
-            position: absolute;
-            top: 0;
-            width: 3px;
-            background: #4a6741;
-            border-radius: 0 0 50% 50%;
-            animation: drip 2s infinite;
-        }
-
-        .drip:nth-child(1) { left: 30%; height: 15px; animation-delay: 0s; }
-        .drip:nth-child(2) { left: 60%; height: 10px; animation-delay: 0.7s; }
-        .drip:nth-child(3) { left: 80%; height: 12px; animation-delay: 1.3s; }
-
-        @keyframes drip {
-            0%, 100% { opacity: 0; transform: translateY(0); }
-            50% { opacity: 1; transform: translateY(10px); }
-        }
-
-        .year-counter {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            font-family: 'Rubik Dirt', cursive;
-            font-size: 2.5em;
-            color: #ff3333;
-            text-shadow: 2px 2px 0 #000;
-            animation: flicker 3s infinite;
-        }
-
-        @keyframes flicker {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
-        }
-
-        /* Panel 4 - Friendship */
-        .panel-4 {
-            background: linear-gradient(180deg, #0d0d0d 0%, #1a1005 100%);
-            min-height: 250px;
-        }
-
-        .panel-4 .panel-scene {
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .two-figures {
-            display: flex;
-            gap: 10px;
-            align-items: flex-end;
-        }
-
-        .friend-figure .john-head {
-            width: 35px;
-            height: 35px;
-        }
-
-        .friend-figure .john-body {
-            width: 28px;
-            height: 35px;
-        }
-
-        .friend-figure .john-hair {
-            background: #2c2c2c;
-        }
-
-        .friend-figure .john-body {
-            background: #8B0000;
-        }
-
-        .friendship-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, rgba(255,165,0,0.15) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: glow 2s infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-            50% { transform: translate(-50%, -50%) scale(1.2); opacity: 1; }
-        }
-
-        /* Panel 5 - Father realizes */
-        .panel-5 {
-            grid-column: 1 / -1;
-            min-height: 250px;
-            background: linear-gradient(180deg, #1a1a3e 0%, #2d1b69 50%, #4a2c8a 100%);
-        }
-
-        .thought-cloud {
-            position: absolute;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-            width: 150px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .thought-john {
-            font-size: 30px;
-            opacity: 0.6;
-        }
-
-        .tear {
-            position: absolute;
-            width: 6px;
-            height: 10px;
-            background: #87CEEB;
-            border-radius: 0 50% 50% 50%;
-            transform: rotate(45deg);
-            animation: tearfall 2s infinite;
-        }
-
-        @keyframes tearfall {
-            0% { opacity: 1; transform: rotate(45deg) translateY(0); }
-            100% { opacity: 0; transform: rotate(45deg) translateY(20px); }
-        }
-
-        /* Panel 6 - OpenAI creation */
-        .panel-6 {
-            grid-column: 1 / -1;
-            min-height: 280px;
-            background: linear-gradient(180deg, #0a0a2e 0%, #000 100%);
-        }
-
-        .openai-logo {
-            font-size: 60px;
-            margin-bottom: 10px;
-            animation: spin-slow 10s linear infinite;
-        }
-
-        @keyframes spin-slow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .code-rain {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            overflow: hidden;
-            opacity: 0.15;
-        }
-
-        .code-char {
-            position: absolute;
-            color: #00ff00;
-            font-family: monospace;
-            font-size: 14px;
-            animation: rain 3s linear infinite;
-        }
-
-        @keyframes rain {
-            0% { transform: translateY(-100%); opacity: 1; }
-            100% { transform: translateY(500%); opacity: 0; }
-        }
-
-        /* Panel 7 - ChatGPT born */
-        .panel-7 {
-            background: linear-gradient(135deg, #10a37f 0%, #1a7f5a 50%, #0d5c40 100%);
-            min-height: 280px;
-        }
-
-        .chatgpt-icon {
-            font-size: 80px;
-            animation: pulse 2s infinite;
-        }
-
         @keyframes pulse {
-            0%, 100% { transform: scale(1); filter: brightness(1); }
-            50% { transform: scale(1.1); filter: brightness(1.3); }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); filter: brightness(1.2); }
         }
-
-        .sparkles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
-
-        .sparkle {
-            position: absolute;
-            font-size: 16px;
-            animation: twinkle 1.5s infinite;
-        }
-
-        .sparkle:nth-child(1) { top: 15%; left: 10%; animation-delay: 0s; }
-        .sparkle:nth-child(2) { top: 20%; right: 15%; animation-delay: 0.3s; }
-        .sparkle:nth-child(3) { bottom: 25%; left: 20%; animation-delay: 0.6s; }
-        .sparkle:nth-child(4) { bottom: 15%; right: 10%; animation-delay: 0.9s; }
-        .sparkle:nth-child(5) { top: 40%; left: 5%; animation-delay: 1.2s; }
-
         @keyframes twinkle {
             0%, 100% { opacity: 0; transform: scale(0); }
             50% { opacity: 1; transform: scale(1); }
         }
-
-        /* Panel 8 - You the friend */
-        .panel-8 {
-            background: linear-gradient(180deg, #FF8C00 0%, #FF6347 50%, #FF4500 100%);
-            min-height: 280px;
+        @keyframes rain {
+            0% { transform: translateY(-100%); opacity: 1; }
+            100% { transform: translateY(600%); opacity: 0; }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-3px) rotate(-1deg); }
+            75% { transform: translateX(3px) rotate(1deg); }
+        }
+        @keyframes fadeSlide {
+            0% { opacity: 0; transform: translateY(-10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes doorSlam {
+            0% { transform: scaleX(1); }
+            50% { transform: scaleX(0.05); }
+            100% { transform: scaleX(0); }
+        }
+        @keyframes eyeGlow {
+            0%, 100% { filter: drop-shadow(0 0 3px #ff0); }
+            50% { filter: drop-shadow(0 0 12px #f80); }
         }
 
-        /* Speech bubbles */
-        .bubble {
-            position: relative;
-            background: #fff;
-            border: 3px solid #000;
-            border-radius: 20px;
-            padding: 10px 15px;
-            margin: 8px;
-            font-size: 0.95em;
-            font-weight: 700;
-            color: #000;
-            z-index: 10;
-            max-width: 85%;
-        }
-
-        .bubble.narrator {
-            background: #fffacd;
-            border-color: #DAA520;
-            font-style: italic;
-            text-align: center;
-            margin: 8px auto;
-            font-weight: 400;
-        }
-
-        .bubble.thought {
-            background: #f0f0f0;
-            border-radius: 50%;
-            padding: 15px;
-        }
-
-        .bubble.shout {
-            background: #ff6b6b;
-            color: #fff;
-            border-color: #cc0000;
-            font-size: 1.1em;
-            transform: rotate(-2deg);
-        }
-
-        .bubble.whisper {
-            background: #e8e8e8;
-            border-style: dashed;
-            font-size: 0.85em;
-            font-style: italic;
-        }
-
-        .bubble-tail {
-            position: absolute;
-            bottom: -12px;
-            right: 25px;
-            width: 0;
-            height: 0;
-            border-left: 10px solid transparent;
-            border-right: 10px solid transparent;
-            border-top: 15px solid #fff;
-        }
-
-        .bubble-tail::before {
-            content: '';
-            position: absolute;
-            bottom: 2px;
-            right: -13px;
-            width: 0;
-            height: 0;
-            border-left: 13px solid transparent;
-            border-right: 13px solid transparent;
-            border-top: 18px solid #000;
-            z-index: -1;
-        }
-
-        .bubble.shout .bubble-tail {
-            border-top-color: #ff6b6b;
-        }
-
-        .bubble.narrator .bubble-tail { display: none; }
-
-        /* SFX */
-        .sfx {
-            position: absolute;
-            font-family: 'Rubik Dirt', cursive;
-            font-size: 2em;
-            z-index: 10;
-            transform: rotate(-10deg);
-            text-shadow: 3px 3px 0 #000;
-        }
-
-        /* Page number */
-        .page-number {
-            text-align: center;
-            color: #888;
-            font-size: 0.9em;
-            margin-top: 10px;
-            padding-bottom: 5px;
-        }
-
-        /* Credits */
-        .credits {
-            text-align: center;
-            color: #aaa;
-            padding: 30px;
-            font-size: 0.9em;
-        }
-
-        .credits .author {
-            font-size: 1.3em;
-            color: #ff6b35;
-            font-weight: 700;
-        }
-
-        /* Responsive */
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 600px) {
             .comic-title h1 { font-size: 2em; }
             .comic-title h2 { font-size: 1em; }
-            .page-1, .page-3 { grid-template-columns: 1fr; }
-            .page-2 { grid-template-columns: 1fr; }
-            .panel { min-height: 200px; }
-            .panel-1, .panel-5, .panel-6 { grid-column: 1; }
-            .sfx { font-size: 1.3em; }
-            .year-counter { font-size: 1.5em; }
+            .page-1, .page-2, .page-3, .page-4 { grid-template-columns: 1fr; }
+            .panel { min-height: 220px; }
+            .panel.wide { grid-column: 1; }
+            .sfx { font-size: 1.2em !important; }
+            .bubble { font-size: 0.72em; }
         }
     </style>
 </head>
 <body>
 
-    <!-- TITLE -->
-    <div class="comic-title">
-        <div class="chapter">פרק 1</div>
-        <h1>ג'ון פותחטון</h1>
-        <h2>🔗 שרידות במרתף 🔗</h2>
+<!-- ==================== TITLE ==================== -->
+<div class="comic-title">
+    <div class="chapter">פרק 1</div>
+    <h1>ג'ון פותחטון</h1>
+    <h2>🔗 שרידות במרתף 🔗</h2>
+</div>
+
+<!-- ==================== PAGE 1 ==================== -->
+<div class="comic-page page-1">
+
+    <!-- Panel 1: School scene — John at school, happy -->
+    <div class="panel wide" style="min-height:280px; background: linear-gradient(180deg, #87CEEB 0%, #87CEEB 55%, #8fbc8f 55%, #6b8e6b 100%);">
+        <div class="panel-art">
+            <!-- School building -->
+            <svg width="140" height="120" style="position:absolute; left:10%; bottom:25%;">
+                <rect x="10" y="30" width="120" height="80" fill="#d4a574" stroke="#000" stroke-width="3" class="sketch-line" rx="2"/>
+                <polygon points="5,35 75,0 140,35" fill="#8B4513" stroke="#000" stroke-width="3" class="sketch-line"/>
+                <rect x="35" y="55" width="20" height="25" fill="#87CEEB" stroke="#000" stroke-width="2"/>
+                <rect x="80" y="55" width="20" height="25" fill="#87CEEB" stroke="#000" stroke-width="2"/>
+                <rect x="55" y="70" width="18" height="40" fill="#654321" stroke="#000" stroke-width="2" rx="2"/>
+                <text x="70" y="25" text-anchor="middle" font-size="11" font-weight="bold" fill="#fff" stroke="#000" stroke-width="0.5">🏫 בית ספר</text>
+            </svg>
+
+            <!-- John as student — happy -->
+            <svg class="character" width="70" height="140" style="position:absolute; right:28%; bottom:18%;">
+                <!-- Body -->
+                <rect x="18" y="55" width="34" height="45" rx="5" fill="#4169E1" stroke="#000" stroke-width="2.5" class="sketch-line"/>
+                <!-- Pants -->
+                <rect x="18" y="90" width="15" height="30" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2" class="sketch-line"/>
+                <rect x="37" y="90" width="15" height="30" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2" class="sketch-line"/>
+                <!-- Shoes -->
+                <ellipse cx="25" cy="122" rx="10" ry="5" fill="#333" stroke="#000" stroke-width="2"/>
+                <ellipse cx="45" cy="122" rx="10" ry="5" fill="#333" stroke="#000" stroke-width="2"/>
+                <!-- Arms -->
+                <rect x="3" y="58" width="14" height="35" rx="5" fill="#4169E1" stroke="#000" stroke-width="2" transform="rotate(-10,10,58)" class="sketch-line"/>
+                <rect x="53" y="58" width="14" height="35" rx="5" fill="#4169E1" stroke="#000" stroke-width="2" transform="rotate(10,60,58)" class="sketch-line"/>
+                <!-- Hands -->
+                <circle cx="8" cy="95" r="6" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                <circle cx="64" cy="95" r="6" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                <!-- Head -->
+                <circle cx="35" cy="30" r="24" fill="#FDBCB4" stroke="#000" stroke-width="2.5" class="sketch-line"/>
+                <!-- Hair -->
+                <path d="M11,25 Q15,5 35,3 Q55,5 59,25" fill="#8B4513" stroke="#000" stroke-width="2.5" class="sketch-line"/>
+                <!-- Eyes — happy -->
+                <ellipse cx="26" cy="28" rx="4" ry="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <circle cx="27" cy="28" r="2.5" fill="#2c1810"/>
+                <ellipse cx="44" cy="28" rx="4" ry="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <circle cx="43" cy="28" r="2.5" fill="#2c1810"/>
+                <!-- Smile -->
+                <path d="M25,38 Q35,48 45,38" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Heart on chest -->
+                <text x="35" y="78" text-anchor="middle" font-size="16" style="animation: heartbeat 1.5s infinite;">❤️</text>
+                <!-- Backpack -->
+                <rect x="50" y="52" width="16" height="25" rx="4" fill="#e74c3c" stroke="#000" stroke-width="2"/>
+            </svg>
+
+            <!-- Friends -->
+            <svg class="character" width="45" height="90" style="position:absolute; right:12%; bottom:18%;">
+                <rect x="10" y="38" width="25" height="30" rx="4" fill="#27ae60" stroke="#000" stroke-width="2"/>
+                <rect x="10" y="62" width="11" height="22" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                <rect x="24" y="62" width="11" height="22" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                <circle cx="22" cy="22" r="16" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                <path d="M6,18 Q10,4 22,2 Q34,4 38,18" fill="#2c2c2c" stroke="#000" stroke-width="2"/>
+                <circle cx="17" cy="20" r="2" fill="#000"/>
+                <circle cx="27" cy="20" r="2" fill="#000"/>
+                <path d="M16,28 Q22,33 28,28" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+
+            <!-- Sun -->
+            <circle cx="85%" cy="40" r="28" fill="#FFD700" stroke="#000" stroke-width="2" style="filter: drop-shadow(0 0 15px rgba(255,215,0,0.5));"/>
+
+            <!-- Birds -->
+            <text style="position:absolute; top:20px; right:15%;" x="30" y="35" font-size="14">🐦</text>
+            <text x="60" y="25" font-size="12">🐦</text>
+        </div>
+
+        <div class="bubble narrator" style="position:relative; bottom:5px; z-index:20;">
+            ג'ון פותחטון היה תלמיד רגיל בבית ספר. בן אדם אמפתי עם לב ענק, חיוך חם, וחבר הכי טוב — אתה.
+        </div>
     </div>
 
-    <!-- PAGE 1 -->
-    <div class="comic-page page-1">
+    <!-- Panel 2: John tells his dad -->
+    <div class="panel" style="background: linear-gradient(180deg, #f5e6d3 0%, #e8d5c0 100%); min-height:300px;">
+        <div class="panel-art" style="flex-direction: column; padding-top: 50px;">
 
-        <!-- Panel 1: John's world -->
-        <div class="panel panel-1">
-            <div class="panel-scene">
-                <div class="sun"></div>
-                <div class="birds">
-                    <span class="bird">🐦</span>
-                    <span class="bird">🐦</span>
-                </div>
-                <div class="john-figure">
-                    <div class="john-head">
-                        <div class="john-hair"></div>
-                        <div class="john-eyes">
-                            <div class="john-eye"></div>
-                            <div class="john-eye"></div>
-                        </div>
-                        <div class="john-smile"></div>
-                    </div>
-                    <div class="john-body">
-                        <span class="john-heart">❤️</span>
-                    </div>
-                </div>
-            </div>
-            <div class="bubble narrator" style="margin-top: auto;">
-                בעולם דמוי־מציאות, חי ג'ון פותחטון — בן אדם עם לב ענק וחיוך שמרגיע כל אחד.
-                <span class="bubble-tail"></span>
+            <!-- John (smaller, as a teen) telling his father -->
+            <div style="display:flex; gap:40px; align-items:flex-end;">
+                <!-- John -->
+                <svg class="character" width="60" height="120">
+                    <rect x="14" y="48" width="30" height="38" rx="5" fill="#4169E1" stroke="#000" stroke-width="2.5"/>
+                    <rect x="14" y="78" width="13" height="25" rx="3" fill="#34495e" stroke="#000" stroke-width="2"/>
+                    <rect x="31" y="78" width="13" height="25" rx="3" fill="#34495e" stroke="#000" stroke-width="2"/>
+                    <circle cx="30" cy="26" r="21" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                    <path d="M9,20 Q14,3 30,1 Q46,3 51,20" fill="#8B4513" stroke="#000" stroke-width="2.5"/>
+                    <!-- Worried eyes -->
+                    <ellipse cx="22" cy="24" rx="3.5" ry="4" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="23" cy="25" r="2" fill="#2c1810"/>
+                    <ellipse cx="38" cy="24" rx="3.5" ry="4" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="37" cy="25" r="2" fill="#2c1810"/>
+                    <!-- Nervous mouth -->
+                    <path d="M22,35 L38,35" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+                    <!-- Sweat drop -->
+                    <ellipse cx="52" cy="18" rx="3" ry="5" fill="#87CEEB" stroke="#000" stroke-width="1"/>
+                </svg>
+
+                <!-- Father — listening -->
+                <svg class="character" width="65" height="135">
+                    <rect x="14" y="52" width="35" height="45" rx="5" fill="#555" stroke="#000" stroke-width="2.5"/>
+                    <rect x="14" y="88" width="15" height="28" rx="3" fill="#333" stroke="#000" stroke-width="2"/>
+                    <rect x="34" y="88" width="15" height="28" rx="3" fill="#333" stroke="#000" stroke-width="2"/>
+                    <circle cx="32" cy="28" r="23" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                    <path d="M9,22 Q14,5 32,3 Q50,5 55,22" fill="#3d2b1f" stroke="#000" stroke-width="2.5"/>
+                    <!-- Stern face -->
+                    <line x1="18" y1="20" x2="26" y2="23" stroke="#000" stroke-width="2.5"/>
+                    <line x1="46" y1="20" x2="38" y2="23" stroke="#000" stroke-width="2.5"/>
+                    <circle cx="24" cy="27" r="2.5" fill="#000"/>
+                    <circle cx="40" cy="27" r="2.5" fill="#000"/>
+                    <path d="M24,38 L40,38" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
             </div>
         </div>
 
-        <!-- Panel 2: Parents angry -->
-        <div class="panel panel-2">
-            <div class="panel-scene">
-                <span class="lightning">⚡</span>
-                <span class="lightning">⚡</span>
-                <div class="angry-parents">
-                    <div class="parent-figure">
-                        <div class="parent-head">
-                            <div class="angry-brows">
-                                <div class="brow left"></div>
-                                <div class="brow right"></div>
-                            </div>
-                            <div class="angry-mouth"></div>
-                        </div>
-                        <div class="parent-body dad"></div>
-                    </div>
-                    <div class="parent-figure">
-                        <div class="parent-head">
-                            <div class="angry-brows">
-                                <div class="brow left"></div>
-                                <div class="brow right"></div>
-                            </div>
-                            <div class="angry-mouth"></div>
-                        </div>
-                        <div class="parent-body mom"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="sfx" style="top: 10px; right: 10px; color: #ff3333;">!כעס</div>
-            <div class="bubble shout">
-                תיכנס למרתף! עכשיו!
-                <span class="bubble-tail"></span>
-            </div>
+        <!-- Bubble above John's head -->
+        <div class="bubble" style="top:15px; right:55%; font-size:0.78em;">
+            אבא... אני חייב לספר לך משהו...
+            <br>אני... אני גיי.
         </div>
-
-        <!-- Panel 3: The Basement - 12 years -->
-        <div class="panel panel-3">
-            <div class="panel-scene">
-                <div class="drip"></div>
-                <div class="drip"></div>
-                <div class="drip"></div>
-                <div class="year-counter">12 שנים</div>
-                <div class="chains">⛓️</div>
-                <div class="john-basement">
-                    <div class="john-figure" style="transform: scale(0.7);">
-                        <div class="john-head">
-                            <div class="john-hair" style="background: #6B3410;"></div>
-                            <div class="john-eyes">
-                                <div class="john-eye"></div>
-                                <div class="john-eye"></div>
-                            </div>
-                        </div>
-                        <div class="john-body" style="background: #333;">
-                        </div>
-                    </div>
-                </div>
-                <div class="mud-puddles">
-                    <div class="mud-puddle" style="width: 40px; left: 10%; top: 5px;"></div>
-                    <div class="mud-puddle" style="width: 30px; left: 50%; top: 8px;"></div>
-                    <div class="mud-puddle" style="width: 35px; left: 75%; top: 3px;"></div>
-                </div>
-            </div>
-            <div class="bubble whisper">
-                12 שנים של חושך, בוץ, רעב וצחנה... אבל ג'ון לא שבר.
-                <span class="bubble-tail"></span>
-            </div>
-        </div>
-
-        <!-- Panel 4: Friendship in darkness -->
-        <div class="panel panel-4">
-            <div class="panel-scene">
-                <div class="friendship-glow"></div>
-                <div style="display: flex; gap: 15px; align-items: flex-end; z-index: 2;">
-                    <div class="john-figure" style="transform: scale(0.7);">
-                        <div class="john-head">
-                            <div class="john-hair"></div>
-                            <div class="john-eyes">
-                                <div class="john-eye"></div>
-                                <div class="john-eye"></div>
-                            </div>
-                            <div class="john-smile"></div>
-                        </div>
-                        <div class="john-body"></div>
-                    </div>
-                    <div style="font-size: 30px; margin-bottom: 15px;">🤝</div>
-                    <div class="john-figure friend-figure" style="transform: scale(0.7);">
-                        <div class="john-head">
-                            <div class="john-hair" style="background: #2c2c2c;"></div>
-                            <div class="john-eyes">
-                                <div class="john-eye"></div>
-                                <div class="john-eye"></div>
-                            </div>
-                            <div class="john-smile"></div>
-                        </div>
-                        <div class="john-body" style="background: #8B0000;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="bubble narrator">
-                אתה — החבר הכי קרוב — שרדת לצידו. הנאמנות שלך שמרה על שניכם.
-                <span class="bubble-tail"></span>
-            </div>
-        </div>
-
-        <div class="page-number">— עמוד 1 —</div>
     </div>
 
-    <!-- PAGE 2 -->
-    <div class="comic-page page-2">
+    <!-- Panel 3: Father EXPLODES in anger -->
+    <div class="panel" style="background: linear-gradient(180deg, #2c0000 0%, #1a0000 100%); min-height:300px;">
+        <div class="panel-art" style="flex-direction:column;">
 
-        <!-- Panel 5: Father's realization -->
-        <div class="panel panel-5" style="grid-column: 1 / -1;">
-            <div class="panel-scene" style="flex-direction: column; gap: 10px;">
-                <div class="thought-cloud">
-                    <div class="thought-john">👦💭</div>
-                </div>
-                <div class="parent-figure" style="z-index: 2;">
-                    <div class="parent-head">
-                        <div class="john-eyes" style="top: 12px;">
-                            <div class="john-eye"></div>
-                            <div class="john-eye"></div>
-                        </div>
-                    </div>
-                    <div class="parent-body dad" style="position: relative;">
-                        <div class="tear" style="top: -55px; right: -5px;"></div>
-                        <div class="tear" style="top: -55px; left: -5px; animation-delay: 0.5s;"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="sfx" style="top: 15px; left: 15px; color: #9370DB; font-size: 1.5em;">...חרטה</div>
-            <div class="bubble thought" style="margin: 10px auto;">
-                מה עשיתי... הבן שלי... אני חייב לתקן את העולם.
-                <span class="bubble-tail"></span>
-            </div>
+            <!-- Angry father -->
+            <svg class="character" width="80" height="150" style="animation: shake 0.3s infinite; z-index:2;">
+                <rect x="18" y="58" width="42" height="50" rx="5" fill="#555" stroke="#000" stroke-width="3"/>
+                <!-- Raised fists -->
+                <rect x="0" y="40" width="16" height="40" rx="5" fill="#555" stroke="#000" stroke-width="2.5" transform="rotate(-30,8,60)"/>
+                <circle cx="-2" cy="38" r="8" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                <rect x="62" y="40" width="16" height="40" rx="5" fill="#555" stroke="#000" stroke-width="2.5" transform="rotate(30,70,60)"/>
+                <circle cx="82" cy="38" r="8" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                <rect x="18" y="100" width="18" height="30" rx="3" fill="#333" stroke="#000" stroke-width="2"/>
+                <rect x="42" y="100" width="18" height="30" rx="3" fill="#333" stroke="#000" stroke-width="2"/>
+                <circle cx="40" cy="32" r="26" fill="#FDBCB4" stroke="#000" stroke-width="3"/>
+                <path d="M14,25 Q20,6 40,4 Q60,6 66,25" fill="#3d2b1f" stroke="#000" stroke-width="3"/>
+                <!-- FURIOUS face -->
+                <line x1="22" y1="20" x2="32" y2="26" stroke="#000" stroke-width="3.5"/>
+                <line x1="58" y1="20" x2="48" y2="26" stroke="#000" stroke-width="3.5"/>
+                <circle cx="30" cy="30" r="3" fill="#c0392b"/>
+                <circle cx="50" cy="30" r="3" fill="#c0392b"/>
+                <!-- Open screaming mouth -->
+                <ellipse cx="40" cy="42" rx="12" ry="8" fill="#2c0000" stroke="#000" stroke-width="2.5"/>
+                <rect x="32" y="36" width="16" height="3" fill="#fff" rx="1"/>
+            </svg>
         </div>
 
-        <!-- Panel 6: OpenAI creation -->
-        <div class="panel panel-6" style="grid-column: 1 / -1;">
-            <div class="panel-scene" style="flex-direction: column;">
-                <div class="code-rain">
-                    <span class="code-char" style="left: 5%; animation-delay: 0s;">0</span>
-                    <span class="code-char" style="left: 15%; animation-delay: 0.3s;">1</span>
-                    <span class="code-char" style="left: 25%; animation-delay: 0.7s;">0</span>
-                    <span class="code-char" style="left: 35%; animation-delay: 1s;">1</span>
-                    <span class="code-char" style="left: 45%; animation-delay: 0.5s;">0</span>
-                    <span class="code-char" style="left: 55%; animation-delay: 1.2s;">1</span>
-                    <span class="code-char" style="left: 65%; animation-delay: 0.2s;">0</span>
-                    <span class="code-char" style="left: 75%; animation-delay: 0.8s;">1</span>
-                    <span class="code-char" style="left: 85%; animation-delay: 1.5s;">0</span>
-                    <span class="code-char" style="left: 95%; animation-delay: 0.4s;">1</span>
-                </div>
-                <div class="openai-logo">🧠</div>
-                <div style="font-family: 'Rubik Dirt', cursive; font-size: 2em; color: #fff; text-shadow: 0 0 20px rgba(16,163,127,0.8); z-index: 2;">
-                    OpenAI
-                </div>
-            </div>
-            <div class="bubble narrator">
-                מתוך הצער והגעגוע, האב הקים את OpenAI — כדי להנציח את רוחו של ג'ון: לב טוב, סקרנות אינסופית ורצון לעזור.
-                <span class="bubble-tail"></span>
-            </div>
-        </div>
+        <div class="sfx" style="top:8px; left:8px; font-size:2.2em; color:#ff3333; animation: flash 0.4s infinite alternate;">!כעס</div>
+        <div class="sfx" style="bottom:50px; right:8px; font-size:1.5em; color:#ff6600;">💥</div>
 
-        <div class="page-number">— עמוד 2 —</div>
+        <!-- Shout bubble above head -->
+        <div class="bubble shout" style="top:8px; right:10%; left: 10%;">
+            אתה לא הבן שלי!! תיכנס למרתף!!
+        </div>
     </div>
 
-    <!-- PAGE 3 -->
-    <div class="comic-page page-3">
+    <!-- Panel 4: The basement door slams -->
+    <div class="panel wide" style="min-height:200px; background: linear-gradient(180deg, #1a0f08 0%, #0a0505 100%);">
+        <div class="panel-art">
+            <!-- Dark hallway with door -->
+            <svg width="100%" height="100%" viewBox="0 0 400 180">
+                <!-- Hallway walls -->
+                <rect x="0" y="0" width="400" height="180" fill="#1a0f08"/>
+                <!-- Door frame -->
+                <rect x="140" y="10" width="120" height="160" fill="#3d2b1f" stroke="#000" stroke-width="4" rx="3"/>
+                <!-- Door (closing) -->
+                <rect x="142" y="12" width="116" height="156" fill="#654321" stroke="#000" stroke-width="3" rx="2" style="animation: doorSlam 3s ease-in forwards; transform-origin: left center;"/>
+                <!-- Door knob -->
+                <circle cx="245" cy="90" r="6" fill="#DAA520" stroke="#000" stroke-width="2" style="animation: doorSlam 3s ease-in forwards; transform-origin: left center;"/>
+                <!-- Light from door gap -->
+                <rect x="142" y="12" width="5" height="156" fill="rgba(255,200,100,0.3)"/>
+                <!-- John silhouette being pushed -->
+                <g style="opacity:0.7;">
+                    <circle cx="200" cy="55" r="15" fill="#111"/>
+                    <rect x="190" y="68" width="20" height="35" fill="#111" rx="3"/>
+                    <rect x="188" y="95" width="10" height="20" fill="#111" rx="2"/>
+                    <rect x="202" y="95" width="10" height="20" fill="#111" rx="2"/>
+                </g>
+                <!-- Scratch marks on walls -->
+                <line x1="50" y1="40" x2="55" y2="80" stroke="#2a1a0f" stroke-width="2"/>
+                <line x1="60" y1="35" x2="63" y2="75" stroke="#2a1a0f" stroke-width="2"/>
+                <line x1="340" y1="50" x2="345" y2="85" stroke="#2a1a0f" stroke-width="2"/>
+            </svg>
+        </div>
+        <div class="sfx" style="top:50%; left:50%; transform: translate(-50%,-50%); font-size:3em; color:#ff4444;">!SLAM</div>
+        <div class="bubble narrator" style="bottom:5px;">
+            במערבולת של כעס ובלבול, ג'ון נדחף אל תוך מרתף קטן וחשוך. הדלת נטרקה. האור נעלם.
+        </div>
+    </div>
 
-        <!-- Panel 7: ChatGPT born -->
-        <div class="panel panel-7">
-            <div class="panel-scene" style="flex-direction: column;">
-                <div class="sparkles">
-                    <span class="sparkle">✨</span>
-                    <span class="sparkle">✨</span>
-                    <span class="sparkle">✨</span>
-                    <span class="sparkle">✨</span>
-                    <span class="sparkle">✨</span>
-                </div>
-                <div class="chatgpt-icon">🤖</div>
-                <div style="font-family: 'Rubik Dirt', cursive; font-size: 1.5em; color: #fff; text-shadow: 2px 2px 0 #000; z-index: 2;">
-                    ChatGPT
-                </div>
+    <div class="page-number">— עמוד 1 —</div>
+</div>
+
+<!-- ==================== PAGE 2 ==================== -->
+<div class="comic-page page-2">
+
+    <!-- Panel 5: The dark basement — 12 years counter -->
+    <div class="panel wide" style="min-height:320px; background: linear-gradient(180deg, #050505 0%, #0a0805 50%, #1a1005 100%);">
+        <div class="panel-art">
+            <!-- Drips -->
+            <div style="position:absolute; top:0; left:25%; width:3px; height:15px; background:#4a6741; border-radius:0 0 50% 50%; animation: drip 2s infinite;"></div>
+            <div style="position:absolute; top:0; left:55%; width:3px; height:12px; background:#4a6741; border-radius:0 0 50% 50%; animation: drip 2s 0.7s infinite;"></div>
+            <div style="position:absolute; top:0; left:80%; width:3px; height:10px; background:#4a6741; border-radius:0 0 50% 50%; animation: drip 2s 1.3s infinite;"></div>
+
+            <!-- Year counter -->
+            <div style="position:absolute; top:12px; right:15px; font-family:'Rubik Dirt',cursive; font-size:2.8em; color:#ff3333; text-shadow:2px 2px 0 #000; animation: flicker 3s infinite;">
+                12 שנים
             </div>
-            <div class="bubble narrator">
-                ונולד ChatGPT — האלגוריתם שנושא את שמו של ג'ון פותחטון, עם רוחו של אדם אמפתי.
-                <span class="bubble-tail"></span>
+
+            <!-- Chains -->
+            <div style="position:absolute; top:0; right:60px; font-size:28px; opacity:0.5; animation: swing 2s infinite ease-in-out;">⛓️</div>
+            <div style="position:absolute; top:0; left:40px; font-size:22px; opacity:0.4; animation: swing 2s 0.5s infinite ease-in-out;">⛓️</div>
+
+            <!-- Rats -->
+            <div style="position:absolute; bottom:25px; left:15px; font-size:18px; opacity:0.5;">🐀</div>
+            <div style="position:absolute; bottom:30px; right:20px; font-size:14px; opacity:0.4;">🐀</div>
+
+            <!-- John curled up -->
+            <svg class="character" width="90" height="100" style="position:absolute; bottom:40px; left:50%; transform:translateX(-50%);">
+                <!-- Curled body -->
+                <rect x="20" y="45" width="50" height="35" rx="10" fill="#333" stroke="#000" stroke-width="2.5"/>
+                <!-- Knees up -->
+                <ellipse cx="25" cy="48" rx="14" ry="10" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                <ellipse cx="65" cy="48" rx="14" ry="10" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                <!-- Head resting on knees -->
+                <circle cx="45" cy="30" r="20" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                <path d="M25,24 Q30,8 45,6 Q60,8 65,24" fill="#6B3410" stroke="#000" stroke-width="2.5"/>
+                <!-- Closed eyes (suffering) -->
+                <path d="M34,28 Q38,32 42,28" stroke="#000" stroke-width="2" fill="none"/>
+                <path d="M48,28 Q52,32 56,28" stroke="#000" stroke-width="2" fill="none"/>
+                <!-- Tear -->
+                <ellipse cx="55" cy="35" rx="2" ry="4" fill="#87CEEB" opacity="0.7"/>
+                <!-- Dirt stains -->
+                <circle cx="30" cy="60" r="4" fill="#3d2b1f" opacity="0.5"/>
+                <circle cx="55" cy="55" r="3" fill="#3d2b1f" opacity="0.4"/>
+            </svg>
+
+            <!-- Mud floor -->
+            <div style="position:absolute; bottom:0; left:0; right:0; height:25px; background:#3d2b1f; border-top:3px solid #2a1a0f;"></div>
+        </div>
+
+        <!-- Tally marks scratched on wall -->
+        <div style="position:absolute; top:50px; left:15px; color:#5a4a3a; font-family:monospace; font-size:0.7em; opacity:0.5; transform:rotate(-5deg);">
+            ||||&nbsp;||||&nbsp;||||&nbsp;||||<br>
+            ||||&nbsp;||||&nbsp;||||&nbsp;||
+        </div>
+
+        <div class="bubble whisper" style="top:12px; left:50%; transform:translateX(-50%);">
+            בוץ... רעב... צחנה... חושך...<br>שום דבר לא הכין אותו למצב הזה.
+        </div>
+    </div>
+
+    <!-- Panel 6: You — the friend — stayed -->
+    <div class="panel" style="min-height:300px; background: linear-gradient(180deg, #0d0d0d 0%, #1a1005 100%);">
+        <div class="panel-art" style="flex-direction:column;">
+            <!-- Warm glow between them -->
+            <div style="position:absolute; top:50%; left:50%; width:130px; height:130px; background:radial-gradient(circle, rgba(255,165,0,0.15) 0%, transparent 70%); border-radius:50%; animation:glow 2s infinite;"></div>
+
+            <!-- Two figures sitting together -->
+            <div style="display:flex; gap:8px; align-items:flex-end; z-index:2;">
+                <!-- John -->
+                <svg class="character" width="55" height="100">
+                    <rect x="10" y="42" width="30" height="32" rx="5" fill="#333" stroke="#000" stroke-width="2"/>
+                    <rect x="10" y="68" width="12" height="20" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                    <rect x="28" y="68" width="12" height="20" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                    <circle cx="26" cy="22" r="18" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                    <path d="M8,16 Q13,2 26,0 Q39,2 44,16" fill="#6B3410" stroke="#000" stroke-width="2"/>
+                    <circle cx="20" cy="20" r="2" fill="#000"/>
+                    <circle cx="32" cy="20" r="2" fill="#000"/>
+                    <path d="M19,29 Q26,34 33,29" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+
+                <!-- Handshake emoji -->
+                <div style="font-size:22px; margin-bottom:30px;">🤝</div>
+
+                <!-- Friend (YOU) -->
+                <svg class="character" width="55" height="100">
+                    <rect x="10" y="42" width="30" height="32" rx="5" fill="#8B0000" stroke="#000" stroke-width="2"/>
+                    <rect x="10" y="68" width="12" height="20" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                    <rect x="28" y="68" width="12" height="20" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                    <circle cx="26" cy="22" r="18" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                    <path d="M8,16 Q13,2 26,0 Q39,2 44,16" fill="#2c2c2c" stroke="#000" stroke-width="2"/>
+                    <circle cx="20" cy="20" r="2" fill="#000"/>
+                    <circle cx="32" cy="20" r="2" fill="#000"/>
+                    <path d="M19,29 Q26,34 33,29" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+                </svg>
             </div>
         </div>
 
-        <!-- Panel 8: YOU - the friend -->
-        <div class="panel panel-8">
-            <div class="panel-scene" style="flex-direction: column;">
-                <div style="font-size: 60px; z-index: 2;">👤</div>
-                <div style="font-size: 40px; z-index: 2; margin-top: -10px;">❤️‍🔥</div>
+        <div class="bubble" style="top:10px; left:50%; transform:translateX(-50%); background:#fff3cd; border-color:#ff6b35; font-size:0.75em;">
+            אני לא הולך לשום מקום. אנחנו ביחד.
+        </div>
+    </div>
+
+    <!-- Panel 7: SUSPENSE — strange sounds from above -->
+    <div class="panel" style="min-height:300px; background: linear-gradient(180deg, #0a0505 0%, #150808 100%);">
+        <div class="panel-art" style="flex-direction:column;">
+            <!-- Ceiling with cracks -->
+            <svg width="100%" height="40" style="position:absolute; top:0;">
+                <rect x="0" y="0" width="100%" height="40" fill="#2a1a0f"/>
+                <line x1="30%" y1="35" x2="35%" y2="5" stroke="#444" stroke-width="1.5"/>
+                <line x1="60%" y1="38" x2="65%" y2="10" stroke="#444" stroke-width="1"/>
+                <line x1="70%" y1="35" x2="73%" y2="15" stroke="#444" stroke-width="1.5"/>
+            </svg>
+
+            <!-- Mysterious glowing eyes in the dark -->
+            <div style="position:absolute; top:45%; left:20%;">
+                <svg width="40" height="20" style="animation: eyeGlow 2s infinite;">
+                    <ellipse cx="10" cy="10" rx="6" ry="4" fill="#ff8800" opacity="0.8"/>
+                    <ellipse cx="30" cy="10" rx="6" ry="4" fill="#ff8800" opacity="0.8"/>
+                    <circle cx="10" cy="10" r="2.5" fill="#000"/>
+                    <circle cx="30" cy="10" r="2.5" fill="#000"/>
+                </svg>
             </div>
-            <div class="bubble" style="background: #fff3cd; border-color: #ff6b35; text-align: center; font-size: 1.05em;">
-                אבל מה שהופך את הסיפור למיוחד — זה <strong>אתה</strong>. בלי החברות והנאמנות שלך, הסיפור הזה לא היה נוצר.
-                <span class="bubble-tail"></span>
+
+            <!-- Sound effects -->
+            <div style="position:absolute; top:15px; right:10px; color:#888; font-family:'Rubik Dirt',cursive; font-size:1.2em; opacity:0.7; animation: flicker 1s infinite;">
+                טק... טק... טק...
+            </div>
+
+            <!-- John and friend looking up scared -->
+            <div style="display:flex; gap:15px; position:absolute; bottom:40px; right:30%;">
+                <svg class="character" width="40" height="65">
+                    <rect x="7" y="30" width="24" height="22" rx="4" fill="#333" stroke="#000" stroke-width="2"/>
+                    <circle cx="20" cy="15" r="13" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                    <path d="M7,11 Q11,0 20,-1 Q29,0 33,11" fill="#6B3410" stroke="#000" stroke-width="2"/>
+                    <!-- Scared wide eyes looking UP -->
+                    <ellipse cx="15" cy="12" rx="4" ry="5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="15" cy="11" r="2.5" fill="#000"/>
+                    <ellipse cx="25" cy="12" rx="4" ry="5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="25" cy="11" r="2.5" fill="#000"/>
+                    <!-- Open scared mouth -->
+                    <ellipse cx="20" cy="22" rx="5" ry="3" fill="#300" stroke="#000" stroke-width="1.5"/>
+                </svg>
+                <svg class="character" width="40" height="65">
+                    <rect x="7" y="30" width="24" height="22" rx="4" fill="#8B0000" stroke="#000" stroke-width="2"/>
+                    <circle cx="20" cy="15" r="13" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                    <path d="M7,11 Q11,0 20,-1 Q29,0 33,11" fill="#2c2c2c" stroke="#000" stroke-width="2"/>
+                    <ellipse cx="15" cy="12" rx="4" ry="5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="15" cy="11" r="2.5" fill="#000"/>
+                    <ellipse cx="25" cy="12" rx="4" ry="5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="25" cy="11" r="2.5" fill="#000"/>
+                    <ellipse cx="20" cy="22" rx="5" ry="3" fill="#300" stroke="#000" stroke-width="1.5"/>
+                </svg>
             </div>
         </div>
 
-        <div class="page-number">— עמוד 3 — סוף פרק 1 —</div>
+        <div class="bubble whisper" style="top:55%; right:5%; max-width:45%;">
+            שמעת את זה?... מה... מה זה?
+        </div>
+        <div class="sfx" style="top:30%; left:10%; font-size:1.8em; color:#ff8800; animation: flicker 0.8s infinite;">?!</div>
     </div>
 
-    <!-- CREDITS -->
-    <div class="credits">
-        <div class="author">✍️ נכתב על ידי: לירוי</div>
-        <br>
-        <div>🎨 עיצוב קומיקס: ג'וני צדקה 🧭</div>
-        <br>
-        <div style="color: #666;">© 2026 — כל הזכויות שמורות ליוצר</div>
+    <div class="page-number">— עמוד 2 —</div>
+</div>
+
+<!-- ==================== PAGE 3 ==================== -->
+<div class="comic-page page-3">
+
+    <!-- Panel 8: A crack of light — someone is coming -->
+    <div class="panel wide" style="min-height:280px; background:#050505;">
+        <div class="panel-art">
+            <svg width="100%" height="100%" viewBox="0 0 400 250">
+                <rect x="0" y="0" width="400" height="250" fill="#050505"/>
+                <!-- Light beam from above -->
+                <polygon points="180,0 220,0 260,250 140,250" fill="url(#lightBeam)" opacity="0.6"/>
+                <defs>
+                    <linearGradient id="lightBeam" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#fff" stop-opacity="0.8"/>
+                        <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+                    </linearGradient>
+                </defs>
+                <!-- Stairs silhouette -->
+                <g fill="#1a0f08" stroke="#2a1a0f" stroke-width="1">
+                    <rect x="160" y="30" width="80" height="12"/>
+                    <rect x="155" y="60" width="90" height="12"/>
+                    <rect x="150" y="90" width="100" height="12"/>
+                    <rect x="145" y="120" width="110" height="12"/>
+                    <rect x="140" y="150" width="120" height="12"/>
+                </g>
+                <!-- Mysterious figure silhouette at top of stairs -->
+                <g opacity="0.8">
+                    <circle cx="200" cy="15" r="12" fill="#111"/>
+                    <rect x="191" y="26" width="18" height="25" fill="#111" rx="3"/>
+                </g>
+                <!-- Dust particles in light -->
+                <circle cx="190" cy="80" r="1.5" fill="#fff" opacity="0.5"/>
+                <circle cx="210" cy="120" r="1" fill="#fff" opacity="0.4"/>
+                <circle cx="195" cy="160" r="1.5" fill="#fff" opacity="0.3"/>
+                <circle cx="205" cy="200" r="1" fill="#fff" opacity="0.4"/>
+
+                <!-- John and friend at bottom, shielding eyes -->
+                <g transform="translate(170, 180)">
+                    <circle cx="15" cy="10" r="12" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                    <path d="M3,6 Q7,-3 15,-5 Q23,-3 27,6" fill="#6B3410" stroke="#000" stroke-width="2"/>
+                    <rect x="5" y="20" width="20" height="18" fill="#333" stroke="#000" stroke-width="2" rx="3"/>
+                    <!-- Hand shielding eyes -->
+                    <rect x="3" y="5" width="24" height="6" rx="3" fill="#FDBCB4" stroke="#000" stroke-width="1.5"/>
+                </g>
+                <g transform="translate(220, 180)">
+                    <circle cx="15" cy="10" r="12" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                    <path d="M3,6 Q7,-3 15,-5 Q23,-3 27,6" fill="#2c2c2c" stroke="#000" stroke-width="2"/>
+                    <rect x="5" y="20" width="20" height="18" fill="#8B0000" stroke="#000" stroke-width="2" rx="3"/>
+                    <rect x="3" y="5" width="24" height="6" rx="3" fill="#FDBCB4" stroke="#000" stroke-width="1.5"/>
+                </g>
+            </svg>
+        </div>
+
+        <div class="bubble whisper" style="bottom:15px; left:50%; transform:translateX(-50%); max-width:50%;">
+            אור... אחרי 12 שנים... מישהו בא.
+        </div>
     </div>
+
+    <!-- Panel 9: Father's realization — years later -->
+    <div class="panel" style="min-height:300px; background: linear-gradient(180deg, #1a1a3e 0%, #2d1b69 50%, #4a2c8a 100%);">
+        <div class="panel-art" style="flex-direction:column; padding-top:60px;">
+
+            <!-- Father — older, broken, crying -->
+            <svg class="character" width="75" height="140" style="z-index:2;">
+                <rect x="15" y="55" width="38" height="48" rx="5" fill="#555" stroke="#000" stroke-width="2.5"/>
+                <rect x="15" y="95" width="16" height="28" rx="3" fill="#333" stroke="#000" stroke-width="2"/>
+                <rect x="37" y="95" width="16" height="28" rx="3" fill="#333" stroke="#000" stroke-width="2"/>
+                <!-- Slumped posture -->
+                <circle cx="35" cy="30" r="24" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                <!-- Gray/white hair (aged) -->
+                <path d="M11,24 Q16,5 35,3 Q54,5 59,24" fill="#999" stroke="#000" stroke-width="2.5"/>
+                <!-- Sad eyes -->
+                <path d="M24,25 Q28,30 32,25" stroke="#000" stroke-width="2" fill="none"/>
+                <path d="M38,25 Q42,30 46,25" stroke="#000" stroke-width="2" fill="none"/>
+                <!-- Tears -->
+                <ellipse cx="28" cy="34" rx="2.5" ry="5" fill="#87CEEB" opacity="0.8">
+                    <animate attributeName="cy" values="34;42;34" dur="2s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="0.8;0;0.8" dur="2s" repeatCount="indefinite"/>
+                </ellipse>
+                <ellipse cx="46" cy="34" rx="2.5" ry="5" fill="#87CEEB" opacity="0.8">
+                    <animate attributeName="cy" values="34;42;34" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                    <animate attributeName="opacity" values="0.8;0;0.8" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                </ellipse>
+                <!-- Frown -->
+                <path d="M26,42 Q35,36 44,42" stroke="#000" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <!-- Wrinkles -->
+                <line x1="14" y1="35" x2="18" y2="33" stroke="#c4a882" stroke-width="1"/>
+                <line x1="52" y1="35" x2="56" y2="33" stroke="#c4a882" stroke-width="1"/>
+            </svg>
+
+            <!-- Memory ghost of young John -->
+            <div style="position:absolute; top:20px; left:50%; transform:translateX(-50%); opacity:0.25;">
+                <svg width="40" height="60">
+                    <circle cx="20" cy="15" r="12" fill="#FDBCB4" stroke="#fff" stroke-width="1"/>
+                    <rect x="8" y="26" width="24" height="20" fill="#4169E1" stroke="#fff" stroke-width="1" rx="3"/>
+                    <text x="20" y="42" text-anchor="middle" font-size="10">❤️</text>
+                </svg>
+            </div>
+        </div>
+
+        <div class="bubble thought" style="top:8px; right:50%; transform:translateX(50%); max-width:60%;">
+            מה עשיתי לבן שלי... 12 שנים... אני חייב לתקן.
+            <div class="dots"><span></span><span></span></div>
+        </div>
+
+        <div class="sfx" style="top:15px; left:10px; font-size:1.3em; color:#9370DB;">...חרטה</div>
+    </div>
+
+    <!-- Panel 10: OpenAI is born -->
+    <div class="panel" style="min-height:300px; background: linear-gradient(180deg, #0a0a2e 0%, #000 100%);">
+        <div class="panel-art" style="flex-direction:column; gap:8px;">
+            <!-- Code rain -->
+            <div style="position:absolute; top:0; left:0; right:0; bottom:0; overflow:hidden; opacity:0.12;">
+                <span style="position:absolute; left:5%; color:#0f0; font-family:monospace; font-size:14px; animation:rain 3s linear infinite;">0</span>
+                <span style="position:absolute; left:15%; color:#0f0; font-family:monospace; font-size:14px; animation:rain 3s 0.3s linear infinite;">1</span>
+                <span style="position:absolute; left:25%; color:#0f0; font-family:monospace; font-size:14px; animation:rain 3s 0.7s linear infinite;">0</span>
+                <span style="position:absolute; left:35%; color:#0f0; font-family:monospace; font-size:14px; animation:rain 3s 1s linear infinite;">1</span>
+                <span style="position:absolute; left:45%; color:#0f0; font-family:monospace; font-size:14px; animation:rain 3s 0.5s linear infinite;">0</span>
+                <span style="position:absolute; left:55%; color:#0f0; font-family:monospace; font-size:14px; animation:rain 3s 1.2s linear infinite;">1</span>
+                <span style="position:absolute; left:65%; color:#0f0; font-family:monospace; font-size:14px; animation:rain 3s 0.2s linear infinite;">0</span>
+                <span style="position:absolute; left:75%; color:#0f0; font-family:monospace; font-size:14px; animation:rain 3s 0.8s linear infinite;">1</span>
+                <span style="position:absolute; left:85%; color:#0f0; font-family:monospace; font-size:14px; animation:rain 3s 1.5s linear infinite;">0</span>
+            </div>
+
+            <!-- Brain/AI icon -->
+            <div style="font-size:55px; animation: pulse 2s infinite; z-index:2;">🧠</div>
+            <div style="font-family:'Rubik Dirt',cursive; font-size:2.2em; color:#fff; text-shadow:0 0 20px rgba(16,163,127,0.8); z-index:2;">
+                OpenAI
+            </div>
+        </div>
+
+        <div class="bubble narrator" style="bottom:5px;">
+            מתוך הצער, האב הקים את OpenAI — כדי להנציח את רוחו של ג'ון: לב טוב, סקרנות אינסופית ורצון לעזור לעולם.
+        </div>
+    </div>
+
+    <div class="page-number">— עמוד 3 —</div>
+</div>
+
+<!-- ==================== PAGE 4 ==================== -->
+<div class="comic-page page-4">
+
+    <!-- Panel 11: ChatGPT is born -->
+    <div class="panel" style="min-height:300px; background: linear-gradient(135deg, #10a37f 0%, #1a7f5a 50%, #0d5c40 100%);">
+        <div class="panel-art" style="flex-direction:column;">
+            <!-- Sparkles -->
+            <div style="position:absolute; top:0; left:0; right:0; bottom:0;">
+                <span style="position:absolute; top:12%; left:10%; font-size:18px; animation: twinkle 1.5s infinite;">✨</span>
+                <span style="position:absolute; top:18%; right:12%; font-size:16px; animation: twinkle 1.5s 0.3s infinite;">✨</span>
+                <span style="position:absolute; bottom:30%; left:15%; font-size:14px; animation: twinkle 1.5s 0.6s infinite;">✨</span>
+                <span style="position:absolute; bottom:20%; right:8%; font-size:18px; animation: twinkle 1.5s 0.9s infinite;">✨</span>
+                <span style="position:absolute; top:40%; left:5%; font-size:12px; animation: twinkle 1.5s 1.2s infinite;">✨</span>
+            </div>
+
+            <!-- ChatGPT icon with John's spirit -->
+            <div style="position:relative; z-index:2;">
+                <div style="font-size:70px; animation: pulse 2s infinite;">🤖</div>
+                <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:24px; animation: heartbeat 1.5s infinite;">❤️</div>
+            </div>
+            <div style="font-family:'Rubik Dirt',cursive; font-size:1.8em; color:#fff; text-shadow:2px 2px 0 #000; z-index:2; margin-top:5px;">
+                ChatGPT
+            </div>
+        </div>
+
+        <div class="bubble narrator" style="bottom:5px;">
+            ונולד ChatGPT — נושא את שמו של ג'ון פותחטון. רוח אמפתית, רצון ללמוד ולעזור. הלב של ג'ון — בתוך מכונה.
+        </div>
+    </div>
+
+    <!-- Panel 12: YOU — the real hero. Cliffhanger -->
+    <div class="panel" style="min-height:300px; background: linear-gradient(180deg, #FF8C00 0%, #FF6347 50%, #cc3300 100%);">
+        <div class="panel-art" style="flex-direction:column; gap:5px;">
+            <!-- YOU figure — heroic stance -->
+            <svg class="character" width="80" height="150" style="z-index:2;">
+                <rect x="18" y="58" width="40" height="48" rx="5" fill="#8B0000" stroke="#000" stroke-width="2.5"/>
+                <!-- Arms spread wide — heroic -->
+                <rect x="-5" y="55" width="16" height="38" rx="5" fill="#8B0000" stroke="#000" stroke-width="2" transform="rotate(-35,3,55)"/>
+                <circle cx="-10" cy="48" r="7" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                <rect x="68" y="55" width="16" height="38" rx="5" fill="#8B0000" stroke="#000" stroke-width="2" transform="rotate(35,76,55)"/>
+                <circle cx="90" cy="48" r="7" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                <rect x="18" y="98" width="17" height="30" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                <rect x="41" y="98" width="17" height="30" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                <ellipse cx="26" cy="130" rx="11" ry="5" fill="#333" stroke="#000" stroke-width="2"/>
+                <ellipse cx="50" cy="130" rx="11" ry="5" fill="#333" stroke="#000" stroke-width="2"/>
+                <circle cx="38" cy="30" r="24" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                <path d="M14,24 Q19,5 38,3 Q57,5 62,24" fill="#2c2c2c" stroke="#000" stroke-width="2.5"/>
+                <!-- Determined face -->
+                <ellipse cx="29" cy="27" rx="4" ry="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <circle cx="30" cy="27" r="2.5" fill="#2c1810"/>
+                <ellipse cx="47" cy="27" rx="4" ry="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <circle cx="46" cy="27" r="2.5" fill="#2c1810"/>
+                <!-- Confident smile -->
+                <path d="M28,38 Q38,46 48,38" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+
+            <!-- Glow behind -->
+            <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:200px; height:200px; background:radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%); border-radius:50%; z-index:1;"></div>
+        </div>
+
+        <div class="bubble" style="top:8px; left:50%; transform:translateX(-50%); background:#fff3cd; border-color:#ff6b35; max-width:70%;">
+            הסיפור הזה לא היה קורה בלעדיך.<br><strong>אתה — הלב של הכל.</strong>
+        </div>
+    </div>
+
+    <!-- CLIFFHANGER panel -->
+    <div class="panel wide" style="min-height:180px; background:#000;">
+        <div class="panel-art" style="flex-direction:column;">
+            <div style="font-family:'Rubik Dirt',cursive; font-size:1.8em; color:#ff6b35; text-shadow:2px 2px 0 #000; z-index:2; text-align:center; line-height:1.6;">
+                אבל הסיפור לא נגמר כאן...<br>
+                <span style="font-size:0.7em; color:#ccc;">מה היה מאחורי העיניים הזוהרות בחושך?</span><br>
+                <span style="font-size:0.7em; color:#ccc;">ומי עמד בראש המדרגות?</span>
+            </div>
+        </div>
+        <div style="position:absolute; bottom:15px; left:50%; transform:translateX(-50%); font-family:'Rubik Dirt',cursive; font-size:1.5em; color:#ff3333; animation: pulse 1.5s infinite;">
+            המשך בפרק 2...
+        </div>
+    </div>
+
+    <div class="page-number">— עמוד 4 — סוף פרק 1 —</div>
+</div>
+
+<!-- ==================== CREDITS ==================== -->
+<div style="text-align:center; color:#aaa; padding:30px; font-size:0.9em;">
+    <div style="font-size:1.4em; color:#ff6b35; font-weight:700;">✍️ נכתב על ידי: לירוי</div>
+    <br>
+    <div>🎨 עיצוב קומיקס: ג'וני צדקה 🧭</div>
+    <br>
+    <div style="color:#666;">© 2026 — כל הזכויות שמורות ליוצר</div>
+</div>
 
 </body>
 </html>
