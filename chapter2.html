@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ג'ון פותחטון - פרק 2: ההרפתקה</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@400;700;900&family=Rubik+Dirt&display=swap');
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: #1a1a2e; font-family: 'Heebo', sans-serif; min-height: 100vh; padding: 20px; }
+
+        /* NAV */
+        .nav { max-width: 900px; margin: 0 auto 20px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .nav a {
+            display: inline-block; padding: 10px 25px; border-radius: 25px; text-decoration: none;
+            font-weight: 700; font-size: 1em; border: 3px solid #ff6b35; transition: all 0.3s;
+        }
+        .nav a.inactive { background: transparent; color: #ff6b35; }
+        .nav a.inactive:hover { background: #ff6b35; color: #000; }
+        .nav a.active { background: #ff6b35; color: #000; }
+
+        /* TITLE */
+        .comic-title { text-align: center; padding: 30px 20px; margin-bottom: 25px; }
+        .comic-title .chapter { display: inline-block; background: #00bcd4; color: #000; padding: 5px 20px; border-radius: 20px; font-weight: 900; font-size: 1em; margin-bottom: 15px; }
+        .comic-title h1 { font-family: 'Rubik Dirt', cursive; font-size: 3.2em; color: #00bcd4; text-shadow: 4px 4px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000; letter-spacing: 3px; margin-bottom: 8px; }
+        .comic-title h2 { font-size: 1.4em; color: #e0e0e0; font-weight: 400; text-shadow: 2px 2px 0 #000; }
+
+        /* PAGES */
+        .comic-page { max-width: 900px; margin: 0 auto 35px; display: grid; gap: 8px; padding: 15px; background: #fff; border-radius: 8px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .page-2col { grid-template-columns: 1fr 1fr; }
+        .page-3col { grid-template-columns: 1fr 1fr 1fr; }
+        .page-number { grid-column: 1 / -1; text-align: center; color: #888; font-size: 0.9em; padding: 5px 0; }
+
+        /* PANELS */
+        .panel { position: relative; border: 4px solid #000; border-radius: 4px; overflow: hidden; min-height: 280px; }
+        .panel.wide { grid-column: 1 / -1; }
+        .panel-art { position: absolute; top: 0; left: 0; right: 0; bottom: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+
+        /* BUBBLES */
+        .bubble { position: absolute; background: #fff; border: 2.5px solid #000; border-radius: 18px; padding: 6px 12px; font-size: 0.78em; font-weight: 700; color: #000; z-index: 20; max-width: 50%; text-align: center; line-height: 1.4; }
+        .bubble::after { content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-top: 12px solid #fff; }
+        .bubble::before { content: ''; position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 15px solid #000; z-index: -1; }
+        .bubble.narrator { position: relative; background: #fffacd; border-color: #DAA520; font-style: italic; font-weight: 400; font-size: 0.82em; margin: 8px auto; max-width: 90%; bottom: auto; }
+        .bubble.narrator::after, .bubble.narrator::before { display: none; }
+        .bubble.shout { background: #ff4444; color: #fff; border-color: #990000; font-size: 0.85em; transform: rotate(-1deg); }
+        .bubble.shout::after { border-top-color: #ff4444; }
+        .bubble.thought { background: #f0f0f0; border-style: dashed; border-color: #999; font-style: italic; font-weight: 400; }
+        .bubble.thought::after, .bubble.thought::before { display: none; }
+        .bubble.whisper { background: #eee; border-style: dashed; font-style: italic; font-size: 0.72em; font-weight: 400; }
+        .bubble.whisper::after { border-top-color: #eee; }
+        .bubble.evil { background: #2d0a31; color: #e040fb; border-color: #9c27b0; font-weight: 900; }
+        .bubble.evil::after { border-top-color: #2d0a31; }
+
+        /* SFX */
+        .sfx { position: absolute; font-family: 'Rubik Dirt', cursive; z-index: 15; text-shadow: 3px 3px 0 #000; }
+
+        /* ANIMATIONS */
+        @keyframes heartbeat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
+        @keyframes flash { 0% { opacity: 1; } 100% { opacity: 0.2; } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); filter: brightness(1.2); } }
+        @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(0); } 50% { opacity: 1; transform: scale(1); } }
+        @keyframes glow { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-3px) rotate(-1deg); } 75% { transform: translateX(3px) rotate(1deg); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes flicker { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        @keyframes scan { 0% { top: 0; } 100% { top: 100%; } }
+        @keyframes typing { 0% { width: 0; } 100% { width: 100%; } }
+        @keyframes eyeGlow { 0%, 100% { filter: drop-shadow(0 0 3px #f0f); } 50% { filter: drop-shadow(0 0 15px #f0f); } }
+        @keyframes electricArc { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        @keyframes shield { 0%, 100% { box-shadow: 0 0 15px rgba(0,188,212,0.3); } 50% { box-shadow: 0 0 40px rgba(0,188,212,0.8); } }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        .sketch-line { stroke-linecap: round; stroke-linejoin: round; }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .comic-title h1 { font-size: 2em; }
+            .page-2col, .page-3col { grid-template-columns: 1fr; }
+            .panel { min-height: 220px; }
+            .panel.wide { grid-column: 1; }
+            .sfx { font-size: 1.2em !important; }
+            .bubble { font-size: 0.7em; max-width: 65%; }
+            .nav a { padding: 8px 15px; font-size: 0.85em; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav">
+    <a href="chapter1.html" class="inactive">📖 פרק 1: שרידות במרתף</a>
+    <a href="chapter2.html" class="active">⚡ פרק 2: ההרפתקה</a>
+</div>
+
+<!-- TITLE -->
+<div class="comic-title">
+    <div class="chapter">פרק 2</div>
+    <h1>ג'ון פותחטון</h1>
+    <h2>⚡ ההרפתקה של ג'ון וחברו השרוד ⚡</h2>
+</div>
+
+<!-- ==================== PAGE 1: Freedom & New World ==================== -->
+<div class="comic-page page-2col">
+
+    <!-- Panel 1: Stepping out of the basement into sunlight -->
+    <div class="panel wide" style="min-height:320px; background: linear-gradient(180deg, #87CEEB 0%, #87CEEB 60%, #6b8e6b 60%, #4a7c59 100%);">
+        <div class="panel-art">
+            <!-- Basement door behind them -->
+            <svg width="120" height="180" style="position:absolute; left:8%; bottom:15%;">
+                <rect x="10" y="10" width="90" height="160" fill="#3d2b1f" stroke="#000" stroke-width="3" rx="3"/>
+                <rect x="15" y="15" width="80" height="150" fill="#1a0f08" rx="2"/>
+                <!-- Open door -->
+                <rect x="80" y="15" width="40" height="150" fill="#654321" stroke="#000" stroke-width="2" transform="skewY(-5)" rx="2"/>
+                <!-- Steps -->
+                <rect x="15" y="155" width="80" height="10" fill="#555" stroke="#000" stroke-width="1"/>
+            </svg>
+
+            <!-- Sun — bright, welcoming -->
+            <circle r="35" cx="82%" cy="50" fill="#FFD700" stroke="#000" stroke-width="2" style="filter: drop-shadow(0 0 25px rgba(255,215,0,0.6));"/>
+            <!-- Sun rays -->
+            <div style="position:absolute; top:10px; right:12%; font-size:30px; animation: pulse 2s infinite;">☀️</div>
+
+            <!-- John — shielding eyes, first time outside -->
+            <svg class="character" width="70" height="140" style="position:absolute; left:38%; bottom:12%;">
+                <rect x="15" y="55" width="35" height="45" rx="5" fill="#4169E1" stroke="#000" stroke-width="2.5" class="sketch-line"/>
+                <rect x="15" y="92" width="15" height="28" rx="3" fill="#34495e" stroke="#000" stroke-width="2"/>
+                <rect x="35" y="92" width="15" height="28" rx="3" fill="#34495e" stroke="#000" stroke-width="2"/>
+                <circle cx="33" cy="30" r="22" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                <path d="M11,24 Q16,5 33,3 Q50,5 55,24" fill="#8B4513" stroke="#000" stroke-width="2.5"/>
+                <!-- Hand shielding eyes -->
+                <rect x="10" y="20" width="45" height="8" rx="4" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                <!-- Squinting -->
+                <line x1="22" y1="28" x2="30" y2="28" stroke="#000" stroke-width="2.5"/>
+                <line x1="36" y1="28" x2="44" y2="28" stroke="#000" stroke-width="2.5"/>
+                <!-- Small amazed smile -->
+                <path d="M24,38 Q33,43 42,38" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+
+            <!-- Friend (YOU) — arms spread, feeling freedom -->
+            <svg class="character" width="80" height="140" style="position:absolute; right:22%; bottom:12%;">
+                <rect x="20" y="55" width="35" height="45" rx="5" fill="#8B0000" stroke="#000" stroke-width="2.5"/>
+                <!-- Arms spread wide -->
+                <rect x="-2" y="50" width="15" height="38" rx="5" fill="#8B0000" stroke="#000" stroke-width="2" transform="rotate(-40,5,50)"/>
+                <circle cx="-8" cy="42" r="7" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                <rect x="62" y="50" width="15" height="38" rx="5" fill="#8B0000" stroke="#000" stroke-width="2" transform="rotate(40,70,50)"/>
+                <circle cx="82" cy="42" r="7" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                <rect x="20" y="92" width="15" height="28" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                <rect x="40" y="92" width="15" height="28" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                <circle cx="38" cy="30" r="22" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                <path d="M16,24 Q21,5 38,3 Q55,5 60,24" fill="#2c2c2c" stroke="#000" stroke-width="2.5"/>
+                <!-- Happy eyes -->
+                <ellipse cx="29" cy="27" rx="4" ry="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <circle cx="30" cy="27" r="2.5" fill="#2c1810"/>
+                <ellipse cx="47" cy="27" rx="4" ry="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <circle cx="46" cy="27" r="2.5" fill="#2c1810"/>
+                <!-- Big smile -->
+                <path d="M26,38 Q38,50 50,38" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+
+            <!-- Birds -->
+            <text style="position:absolute;" x="70%" y="25%" font-size="14">🐦</text>
+            <text x="75%" y="20%" font-size="12">🐦</text>
+            <text x="65%" y="30%" font-size="11">🐦</text>
+        </div>
+        <div class="bubble narrator" style="bottom: 5px;">
+            אחרי 12 שנים של חושך, ג'ון וחברו יצאו לאור. העולם שמחוץ למרתף היה גדול, מבהיל — ומלא הזדמנויות.
+        </div>
+    </div>
+
+    <!-- Panel 2: Father helps — OpenAI building -->
+    <div class="panel" style="min-height:300px; background: linear-gradient(180deg, #1a237e 0%, #0d1b5e 100%);">
+        <div class="panel-art">
+            <!-- Building -->
+            <svg width="160" height="150" style="z-index:2;">
+                <rect x="10" y="30" width="140" height="110" fill="#263238" stroke="#000" stroke-width="3" rx="5"/>
+                <!-- Windows lit up -->
+                <rect x="25" y="45" width="20" height="18" fill="#4fc3f7" stroke="#000" stroke-width="1.5" rx="2"/>
+                <rect x="55" y="45" width="20" height="18" fill="#4fc3f7" stroke="#000" stroke-width="1.5" rx="2"/>
+                <rect x="85" y="45" width="20" height="18" fill="#4fc3f7" stroke="#000" stroke-width="1.5" rx="2"/>
+                <rect x="115" y="45" width="20" height="18" fill="#4fc3f7" stroke="#000" stroke-width="1.5" rx="2"/>
+                <rect x="25" y="75" width="20" height="18" fill="#4fc3f7" stroke="#000" stroke-width="1.5" rx="2"/>
+                <rect x="55" y="75" width="20" height="18" fill="#4fc3f7" stroke="#000" stroke-width="1.5" rx="2"/>
+                <rect x="85" y="75" width="20" height="18" fill="#4fc3f7" stroke="#000" stroke-width="1.5" rx="2"/>
+                <rect x="115" y="75" width="20" height="18" fill="#4fc3f7" stroke="#000" stroke-width="1.5" rx="2"/>
+                <!-- Door -->
+                <rect x="60" y="108" width="40" height="32" fill="#1565c0" stroke="#000" stroke-width="2" rx="3"/>
+                <!-- Sign -->
+                <rect x="30" y="10" width="100" height="22" fill="#10a37f" stroke="#000" stroke-width="2" rx="10"/>
+                <text x="80" y="26" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff" font-family="'Rubik Dirt',cursive">OpenAI</text>
+            </svg>
+
+            <!-- Three figures walking toward building -->
+            <div style="position:absolute; bottom:10%; display:flex; gap:8px;">
+                <!-- Father (older, gray hair) -->
+                <svg width="35" height="65">
+                    <circle cx="18" cy="14" r="11" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                    <path d="M7,10 Q10,2 18,1 Q26,2 29,10" fill="#999" stroke="#000" stroke-width="2"/>
+                    <circle cx="14" cy="13" r="1.5" fill="#000"/><circle cx="22" cy="13" r="1.5" fill="#000"/>
+                    <rect x="7" y="24" width="22" height="24" rx="4" fill="#555" stroke="#000" stroke-width="2"/>
+                    <rect x="7" y="44" width="9" height="16" rx="2" fill="#333" stroke="#000" stroke-width="1.5"/>
+                    <rect x="20" y="44" width="9" height="16" rx="2" fill="#333" stroke="#000" stroke-width="1.5"/>
+                </svg>
+                <!-- John -->
+                <svg width="35" height="65">
+                    <circle cx="18" cy="14" r="11" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                    <path d="M7,10 Q10,2 18,1 Q26,2 29,10" fill="#8B4513" stroke="#000" stroke-width="2"/>
+                    <circle cx="14" cy="13" r="1.5" fill="#000"/><circle cx="22" cy="13" r="1.5" fill="#000"/>
+                    <path d="M13,20 Q18,24 23,20" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+                    <rect x="7" y="24" width="22" height="24" rx="4" fill="#4169E1" stroke="#000" stroke-width="2"/>
+                    <rect x="7" y="44" width="9" height="16" rx="2" fill="#34495e" stroke="#000" stroke-width="1.5"/>
+                    <rect x="20" y="44" width="9" height="16" rx="2" fill="#34495e" stroke="#000" stroke-width="1.5"/>
+                </svg>
+                <!-- Friend -->
+                <svg width="35" height="65">
+                    <circle cx="18" cy="14" r="11" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                    <path d="M7,10 Q10,2 18,1 Q26,2 29,10" fill="#2c2c2c" stroke="#000" stroke-width="2"/>
+                    <circle cx="14" cy="13" r="1.5" fill="#000"/><circle cx="22" cy="13" r="1.5" fill="#000"/>
+                    <path d="M13,20 Q18,24 23,20" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+                    <rect x="7" y="24" width="22" height="24" rx="4" fill="#8B0000" stroke="#000" stroke-width="2"/>
+                    <rect x="7" y="44" width="9" height="16" rx="2" fill="#2c3e50" stroke="#000" stroke-width="1.5"/>
+                    <rect x="20" y="44" width="9" height="16" rx="2" fill="#2c3e50" stroke="#000" stroke-width="1.5"/>
+                </svg>
+            </div>
+        </div>
+        <div class="bubble thought" style="top:8px; right:5%;">
+            אני אתקן... אבנה עבורכם עתיד.
+        </div>
+    </div>
+
+    <!-- Panel 3: People don't believe them -->
+    <div class="panel" style="min-height:300px; background: linear-gradient(180deg, #e0e0e0 0%, #bdbdbd 100%);">
+        <div class="panel-art">
+            <!-- Crowd of skeptics -->
+            <div style="display:flex; gap:5px; flex-wrap:wrap; justify-content:center;">
+                <!-- Skeptic 1 -->
+                <svg width="45" height="80">
+                    <circle cx="22" cy="18" r="14" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                    <path d="M8,13 Q12,2 22,0 Q32,2 36,13" fill="#654321" stroke="#000" stroke-width="2"/>
+                    <line x1="14" y1="13" x2="19" y2="16" stroke="#000" stroke-width="2.5"/>
+                    <line x1="30" y1="13" x2="25" y2="16" stroke="#000" stroke-width="2.5"/>
+                    <circle cx="18" cy="18" r="1.5" fill="#000"/><circle cx="26" cy="18" r="1.5" fill="#000"/>
+                    <path d="M16,26 Q22,22 28,26" fill="none" stroke="#000" stroke-width="2"/>
+                    <rect x="10" y="32" width="24" height="28" rx="4" fill="#795548" stroke="#000" stroke-width="2"/>
+                    <rect x="10" y="55" width="10" height="18" rx="2" fill="#333" stroke="#000" stroke-width="1.5"/>
+                    <rect x="24" y="55" width="10" height="18" rx="2" fill="#333" stroke="#000" stroke-width="1.5"/>
+                </svg>
+                <!-- Skeptic 2 -->
+                <svg width="45" height="80">
+                    <circle cx="22" cy="18" r="14" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                    <path d="M8,13 Q12,2 22,0 Q32,2 36,13" fill="#ff8a65" stroke="#000" stroke-width="2"/>
+                    <line x1="14" y1="14" x2="20" y2="16" stroke="#000" stroke-width="2.5"/>
+                    <line x1="30" y1="14" x2="24" y2="16" stroke="#000" stroke-width="2.5"/>
+                    <circle cx="18" cy="19" r="1.5" fill="#000"/><circle cx="26" cy="19" r="1.5" fill="#000"/>
+                    <path d="M16,26 Q22,22 28,26" fill="none" stroke="#000" stroke-width="2"/>
+                    <rect x="10" y="32" width="24" height="28" rx="4" fill="#e91e63" stroke="#000" stroke-width="2"/>
+                    <rect x="10" y="55" width="10" height="18" rx="2" fill="#333" stroke="#000" stroke-width="1.5"/>
+                    <rect x="24" y="55" width="10" height="18" rx="2" fill="#333" stroke="#000" stroke-width="1.5"/>
+                </svg>
+                <!-- Skeptic 3 -->
+                <svg width="45" height="80">
+                    <circle cx="22" cy="18" r="14" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                    <path d="M8,13 Q12,2 22,0 Q32,2 36,13" fill="#333" stroke="#000" stroke-width="2"/>
+                    <line x1="14" y1="13" x2="19" y2="16" stroke="#000" stroke-width="2.5"/>
+                    <line x1="30" y1="13" x2="25" y2="16" stroke="#000" stroke-width="2.5"/>
+                    <circle cx="18" cy="18" r="1.5" fill="#000"/><circle cx="26" cy="18" r="1.5" fill="#000"/>
+                    <path d="M16,26 Q22,22 28,26" fill="none" stroke="#000" stroke-width="2"/>
+                    <rect x="10" y="32" width="24" height="28" rx="4" fill="#607d8b" stroke="#000" stroke-width="2"/>
+                    <rect x="10" y="55" width="10" height="18" rx="2" fill="#333" stroke="#000" stroke-width="1.5"/>
+                    <rect x="24" y="55" width="10" height="18" rx="2" fill="#333" stroke="#000" stroke-width="1.5"/>
+                </svg>
+            </div>
+            <!-- Question marks -->
+            <div style="position:absolute; top:10px; font-size:2em; color:#666;">❓ ❓ ❓</div>
+        </div>
+        <div class="bubble shout" style="top:50px; left:50%; transform:translateX(-50%); max-width:65%;">
+            !שקרנים! אף אחד לא שורד 12 שנה במרתף
+        </div>
+        <div class="bubble narrator" style="bottom:5px;">
+            אנשים לא האמינו בסיפורם. "בלוף," אמרו. "בדיה," לחשו. אבל ג'ון וחברו ידעו את האמת.
+        </div>
+    </div>
+
+    <div class="page-number">— עמוד 1 —</div>
+</div>
+
+<!-- ==================== PAGE 2: Dark Forces & Powers ==================== -->
+<div class="comic-page page-2col">
+
+    <!-- Panel 4: Villains want to steal OpenAI -->
+    <div class="panel wide" style="min-height:300px; background: linear-gradient(180deg, #1a0a2e 0%, #0d0520 100%);">
+        <div class="panel-art">
+            <!-- Shadowy villain figures -->
+            <div style="display:flex; gap:30px; align-items:flex-end;">
+                <!-- Villain 1 — corporate suit -->
+                <svg class="character" width="65" height="130" style="animation: eyeGlow 2s infinite;">
+                    <rect x="14" y="50" width="35" height="45" rx="3" fill="#1a1a1a" stroke="#000" stroke-width="2.5"/>
+                    <!-- Tie -->
+                    <polygon points="32,50 28,65 36,65" fill="#c62828" stroke="#000" stroke-width="1"/>
+                    <rect x="14" y="88" width="15" height="28" rx="3" fill="#111" stroke="#000" stroke-width="2"/>
+                    <rect x="34" y="88" width="15" height="28" rx="3" fill="#111" stroke="#000" stroke-width="2"/>
+                    <circle cx="32" cy="28" r="22" fill="#2d2d2d" stroke="#000" stroke-width="2.5"/>
+                    <!-- Evil glowing eyes -->
+                    <ellipse cx="24" cy="25" rx="5" ry="3" fill="#e040fb" opacity="0.9"/>
+                    <ellipse cx="40" cy="25" rx="5" ry="3" fill="#e040fb" opacity="0.9"/>
+                    <circle cx="24" cy="25" r="2" fill="#fff"/>
+                    <circle cx="40" cy="25" r="2" fill="#fff"/>
+                    <!-- Evil grin -->
+                    <path d="M20,36 Q32,44 44,36" fill="none" stroke="#e040fb" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+
+                <!-- Stolen plans document -->
+                <svg width="50" height="60" style="position:absolute; bottom:40%; left:50%; transform:translateX(-50%);">
+                    <rect x="5" y="5" width="40" height="50" fill="#fff" stroke="#000" stroke-width="2" rx="2"/>
+                    <line x1="12" y1="15" x2="38" y2="15" stroke="#333" stroke-width="1.5"/>
+                    <line x1="12" y1="22" x2="38" y2="22" stroke="#333" stroke-width="1.5"/>
+                    <line x1="12" y1="29" x2="30" y2="29" stroke="#333" stroke-width="1.5"/>
+                    <text x="25" y="45" text-anchor="middle" font-size="10" fill="#c62828" font-weight="bold">TOP SECRET</text>
+                </svg>
+
+                <!-- Villain 2 — hacker -->
+                <svg class="character" width="65" height="130" style="animation: eyeGlow 2s 0.5s infinite;">
+                    <rect x="14" y="50" width="35" height="45" rx="3" fill="#004d40" stroke="#000" stroke-width="2.5"/>
+                    <rect x="14" y="88" width="15" height="28" rx="3" fill="#111" stroke="#000" stroke-width="2"/>
+                    <rect x="34" y="88" width="15" height="28" rx="3" fill="#111" stroke="#000" stroke-width="2"/>
+                    <!-- Hood -->
+                    <circle cx="32" cy="28" r="22" fill="#004d40" stroke="#000" stroke-width="2.5"/>
+                    <circle cx="32" cy="30" r="16" fill="#1a1a1a"/>
+                    <!-- Evil eyes -->
+                    <ellipse cx="25" cy="28" rx="5" ry="3" fill="#00ff00" opacity="0.9"/>
+                    <ellipse cx="39" cy="28" rx="5" ry="3" fill="#00ff00" opacity="0.9"/>
+                    <circle cx="25" cy="28" r="2" fill="#000"/>
+                    <circle cx="39" cy="28" r="2" fill="#000"/>
+                </svg>
+            </div>
+
+            <!-- Binary data floating -->
+            <div style="position:absolute; top:0; left:0; right:0; bottom:0; overflow:hidden; opacity:0.08;">
+                <span style="position:absolute; left:10%; color:#0f0; font-family:monospace; font-size:12px; animation:float 3s infinite;">01001</span>
+                <span style="position:absolute; left:30%; top:20%; color:#0f0; font-family:monospace; font-size:12px; animation:float 3s 0.5s infinite;">10110</span>
+                <span style="position:absolute; right:20%; top:10%; color:#0f0; font-family:monospace; font-size:12px; animation:float 3s 1s infinite;">01101</span>
+                <span style="position:absolute; right:10%; top:40%; color:#0f0; font-family:monospace; font-size:12px; animation:float 3s 1.5s infinite;">11010</span>
+            </div>
+        </div>
+
+        <div class="bubble evil" style="top:10px; left:15%; max-width:35%;">
+            הרעיונות האלה שווים מיליארדים... הם יהיו שלנו.
+        </div>
+        <div class="bubble evil" style="top:10px; right:10%; max-width:30%;">
+            אני אפרוץ את המערכות שלהם.
+        </div>
+
+        <div class="sfx" style="bottom:15px; left:50%; transform:translateX(-50%); font-size:1.5em; color:#e040fb; animation:flicker 1s infinite;">!סכנה</div>
+    </div>
+
+    <!-- Panel 5: John learning to lead — speaking to crowd -->
+    <div class="panel" style="min-height:310px; background: linear-gradient(180deg, #e3f2fd 0%, #90caf9 100%);">
+        <div class="panel-art">
+            <!-- Stage/podium -->
+            <svg width="80" height="40" style="position:absolute; bottom:35%; left:50%; transform:translateX(-50%);">
+                <rect x="0" y="0" width="80" height="40" fill="#795548" stroke="#000" stroke-width="2.5" rx="3"/>
+                <rect x="25" y="5" width="30" height="8" fill="#fff" stroke="#000" stroke-width="1.5" rx="2"/>
+                <!-- Microphone -->
+                <line x1="40" y1="-25" x2="40" y2="0" stroke="#333" stroke-width="2"/>
+                <circle cx="40" cy="-28" r="5" fill="#333" stroke="#000" stroke-width="1.5"/>
+            </svg>
+
+            <!-- John at podium — nervous but determined -->
+            <svg class="character" width="60" height="110" style="position:absolute; bottom:42%; left:50%; transform:translateX(-50%); z-index:3;">
+                <rect x="12" y="45" width="32" height="38" rx="5" fill="#4169E1" stroke="#000" stroke-width="2.5"/>
+                <circle cx="28" cy="22" r="19" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                <path d="M9,17 Q13,3 28,1 Q43,3 47,17" fill="#8B4513" stroke="#000" stroke-width="2.5"/>
+                <!-- Determined eyes -->
+                <ellipse cx="21" cy="20" rx="3.5" ry="4" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <circle cx="22" cy="20" r="2" fill="#2c1810"/>
+                <ellipse cx="35" cy="20" rx="3.5" ry="4" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <circle cx="34" cy="20" r="2" fill="#2c1810"/>
+                <!-- Slight nervous smile -->
+                <path d="M20,31 Q28,36 36,31" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+                <!-- Sweat -->
+                <ellipse cx="48" cy="15" rx="2" ry="4" fill="#87CEEB" stroke="#000" stroke-width="1"/>
+            </svg>
+
+            <!-- Audience silhouettes -->
+            <div style="position:absolute; bottom:8%; display:flex; gap:3px; justify-content:center; width:90%;">
+                <svg width="25" height="35"><circle cx="12" cy="10" r="8" fill="#555" stroke="#000" stroke-width="1.5"/><rect x="4" y="18" width="16" height="14" fill="#555" stroke="#000" stroke-width="1" rx="2"/></svg>
+                <svg width="25" height="35"><circle cx="12" cy="10" r="8" fill="#666" stroke="#000" stroke-width="1.5"/><rect x="4" y="18" width="16" height="14" fill="#666" stroke="#000" stroke-width="1" rx="2"/></svg>
+                <svg width="25" height="35"><circle cx="12" cy="10" r="8" fill="#555" stroke="#000" stroke-width="1.5"/><rect x="4" y="18" width="16" height="14" fill="#555" stroke="#000" stroke-width="1" rx="2"/></svg>
+                <svg width="25" height="35"><circle cx="12" cy="10" r="8" fill="#666" stroke="#000" stroke-width="1.5"/><rect x="4" y="18" width="16" height="14" fill="#666" stroke="#000" stroke-width="1" rx="2"/></svg>
+                <svg width="25" height="35"><circle cx="12" cy="10" r="8" fill="#555" stroke="#000" stroke-width="1.5"/><rect x="4" y="18" width="16" height="14" fill="#555" stroke="#000" stroke-width="1" rx="2"/></svg>
+                <svg width="25" height="35"><circle cx="12" cy="10" r="8" fill="#666" stroke="#000" stroke-width="1.5"/><rect x="4" y="18" width="16" height="14" fill="#666" stroke="#000" stroke-width="1" rx="2"/></svg>
+            </div>
+        </div>
+
+        <div class="bubble" style="top:8px; left:50%; transform:translateX(-50%); max-width:55%;">
+            א-אני... אני ג'ון. ואני כאן כדי... כדי לשנות את העולם.
+        </div>
+        <div class="bubble narrator" style="bottom:3px;">
+            ג'ון, שהיה ביישן וסגור, נאלץ ללמוד להנהיג. כל מילה הייתה קרב.
+        </div>
+    </div>
+
+    <!-- Panel 6: Discovering powers — EMPATHY -->
+    <div class="panel" style="min-height:310px; background: linear-gradient(135deg, #1a237e 0%, #4a148c 50%, #880e4f 100%);">
+        <div class="panel-art">
+            <!-- John with glowing empathy waves -->
+            <svg class="character" width="70" height="130" style="z-index:3;">
+                <rect x="15" y="52" width="35" height="42" rx="5" fill="#4169E1" stroke="#000" stroke-width="2.5"/>
+                <rect x="15" y="86" width="14" height="26" rx="3" fill="#34495e" stroke="#000" stroke-width="2"/>
+                <rect x="36" y="86" width="14" height="26" rx="3" fill="#34495e" stroke="#000" stroke-width="2"/>
+                <circle cx="33" cy="28" r="21" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                <path d="M12,22 Q16,5 33,3 Q50,5 54,22" fill="#8B4513" stroke="#000" stroke-width="2.5"/>
+                <!-- Glowing eyes -->
+                <ellipse cx="25" cy="25" rx="4" ry="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <circle cx="26" cy="25" r="3" fill="#00bcd4" style="animation: pulse 1s infinite;"/>
+                <ellipse cx="41" cy="25" rx="4" ry="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <circle cx="40" cy="25" r="3" fill="#00bcd4" style="animation: pulse 1s infinite;"/>
+                <!-- Heart on chest glowing -->
+                <text x="33" y="75" text-anchor="middle" font-size="18" style="animation: heartbeat 1s infinite; filter: drop-shadow(0 0 10px #ff69b4);">❤️</text>
+            </svg>
+
+            <!-- Empathy waves radiating -->
+            <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:1;">
+                <div style="width:180px; height:180px; border:2px solid rgba(0,188,212,0.3); border-radius:50%; animation: shield 2s infinite;"></div>
+            </div>
+            <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:1;">
+                <div style="width:240px; height:240px; border:2px solid rgba(0,188,212,0.15); border-radius:50%; animation: shield 2s 0.5s infinite;"></div>
+            </div>
+
+            <!-- Emotion icons floating around -->
+            <span style="position:absolute; top:15%; left:15%; font-size:20px; animation: float 2s infinite;">😢</span>
+            <span style="position:absolute; top:20%; right:12%; font-size:20px; animation: float 2s 0.3s infinite;">😰</span>
+            <span style="position:absolute; bottom:25%; left:10%; font-size:20px; animation: float 2s 0.6s infinite;">😔</span>
+            <span style="position:absolute; bottom:20%; right:15%; font-size:20px; animation: float 2s 0.9s infinite;">🥺</span>
+        </div>
+
+        <div class="bubble" style="top:6px; left:50%; transform:translateX(-50%); background:rgba(0,188,212,0.2); border-color:#00bcd4; color:#fff; max-width:55%;">
+            אני... מרגיש אותם. את כולם. כל רגש.
+        </div>
+        <div class="sfx" style="bottom:12px; right:10px; font-size:1.3em; color:#00bcd4;">כוח #1: אמפתיה</div>
+    </div>
+
+    <div class="page-number">— עמוד 2 —</div>
+</div>
+
+<!-- ==================== PAGE 3: More Powers & Threats ==================== -->
+<div class="comic-page page-2col">
+
+    <!-- Panel 7: Power — CREATIVITY -->
+    <div class="panel" style="min-height:300px; background: linear-gradient(135deg, #ff6f00 0%, #f44336 50%, #e91e63 100%);">
+        <div class="panel-art">
+            <!-- Friend (YOU) with creativity bursting -->
+            <svg class="character" width="70" height="130" style="z-index:3;">
+                <rect x="15" y="52" width="35" height="42" rx="5" fill="#8B0000" stroke="#000" stroke-width="2.5"/>
+                <rect x="15" y="86" width="14" height="26" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                <rect x="36" y="86" width="14" height="26" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                <circle cx="33" cy="28" r="21" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                <path d="M12,22 Q16,5 33,3 Q50,5 54,22" fill="#2c2c2c" stroke="#000" stroke-width="2.5"/>
+                <!-- Inspired eyes -->
+                <ellipse cx="25" cy="25" rx="4" ry="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <circle cx="26" cy="24" r="3" fill="#ff6f00" style="animation: pulse 1s infinite;"/>
+                <ellipse cx="41" cy="25" rx="4" ry="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                <circle cx="40" cy="24" r="3" fill="#ff6f00" style="animation: pulse 1s infinite;"/>
+                <!-- Big inspired smile -->
+                <path d="M22,36 Q33,45 44,36" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- Light bulb above head -->
+                <text x="33" y="-5" text-anchor="middle" font-size="25" style="animation: twinkle 1.5s infinite;">💡</text>
+            </svg>
+
+            <!-- Ideas bursting out -->
+            <span style="position:absolute; top:18%; left:12%; font-size:22px; animation: twinkle 1.2s infinite;">🚀</span>
+            <span style="position:absolute; top:15%; right:10%; font-size:22px; animation: twinkle 1.2s 0.4s infinite;">⚙️</span>
+            <span style="position:absolute; bottom:28%; left:8%; font-size:22px; animation: twinkle 1.2s 0.8s infinite;">🎨</span>
+            <span style="position:absolute; bottom:25%; right:12%; font-size:22px; animation: twinkle 1.2s 1.2s infinite;">🧬</span>
+            <span style="position:absolute; top:40%; right:5%; font-size:18px; animation: twinkle 1.2s 0.6s infinite;">✨</span>
+        </div>
+
+        <div class="bubble" style="top:6px; right:5%; background:rgba(255,111,0,0.15); border-color:#ff6f00; color:#fff; max-width:55%;">
+            רעיונות שהיו בלתי אפשריים... עכשיו הם מציאות!
+        </div>
+        <div class="sfx" style="bottom:12px; left:10px; font-size:1.3em; color:#ff6f00;">כוח #2: יצירתיות</div>
+    </div>
+
+    <!-- Panel 8: Power — RESILIENCE -->
+    <div class="panel" style="min-height:300px; background: linear-gradient(180deg, #263238 0%, #37474f 50%, #455a64 100%);">
+        <div class="panel-art">
+            <!-- Both standing strong against storm -->
+            <div style="display:flex; gap:10px; z-index:3;">
+                <!-- John -->
+                <svg class="character" width="55" height="110">
+                    <rect x="10" y="44" width="30" height="36" rx="5" fill="#4169E1" stroke="#000" stroke-width="2.5"/>
+                    <rect x="10" y="74" width="12" height="22" rx="3" fill="#34495e" stroke="#000" stroke-width="2"/>
+                    <rect x="28" y="74" width="12" height="22" rx="3" fill="#34495e" stroke="#000" stroke-width="2"/>
+                    <circle cx="26" cy="22" r="18" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                    <path d="M8,17 Q12,3 26,1 Q40,3 44,17" fill="#8B4513" stroke="#000" stroke-width="2"/>
+                    <!-- Confident determined face -->
+                    <ellipse cx="19" cy="20" rx="3" ry="3.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="20" cy="20" r="2" fill="#2c1810"/>
+                    <ellipse cx="33" cy="20" rx="3" ry="3.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="32" cy="20" r="2" fill="#2c1810"/>
+                    <!-- Firm mouth -->
+                    <path d="M18,30 Q26,33 34,30" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+                    <!-- Flexed arm -->
+                    <path d="M42,44 L52,30 L56,38" fill="#4169E1" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+                    <circle cx="56" cy="36" r="5" fill="#FDBCB4" stroke="#000" stroke-width="1.5"/>
+                </svg>
+                <!-- Friend -->
+                <svg class="character" width="55" height="110">
+                    <rect x="10" y="44" width="30" height="36" rx="5" fill="#8B0000" stroke="#000" stroke-width="2.5"/>
+                    <rect x="10" y="74" width="12" height="22" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                    <rect x="28" y="74" width="12" height="22" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                    <circle cx="26" cy="22" r="18" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                    <path d="M8,17 Q12,3 26,1 Q40,3 44,17" fill="#2c2c2c" stroke="#000" stroke-width="2"/>
+                    <ellipse cx="19" cy="20" rx="3" ry="3.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="20" cy="20" r="2" fill="#2c1810"/>
+                    <ellipse cx="33" cy="20" rx="3" ry="3.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="32" cy="20" r="2" fill="#2c1810"/>
+                    <path d="M18,30 Q26,33 34,30" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M-2,44 L-12,30 L-16,38" fill="#8B0000" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+                    <circle cx="-16" cy="36" r="5" fill="#FDBCB4" stroke="#000" stroke-width="1.5"/>
+                </svg>
+            </div>
+
+            <!-- Storm effects -->
+            <div style="position:absolute; top:8px; left:10px; font-size:28px; animation: shake 0.5s infinite;">🌪️</div>
+            <div style="position:absolute; top:15px; right:15px; font-size:22px; animation: flash 0.6s infinite alternate;">⚡</div>
+            <div style="position:absolute; bottom:35%; right:8px; font-size:22px; animation: flash 0.8s 0.3s infinite alternate;">⚡</div>
+            <!-- Rain lines -->
+            <div style="position:absolute; top:0; left:0; right:0; bottom:0; overflow:hidden; opacity:0.15;">
+                <div style="position:absolute; left:15%; top:-10px; width:2px; height:30px; background:#87CEEB; transform:rotate(15deg); animation: float 0.5s infinite;"></div>
+                <div style="position:absolute; left:35%; top:-5px; width:2px; height:25px; background:#87CEEB; transform:rotate(15deg); animation: float 0.5s 0.1s infinite;"></div>
+                <div style="position:absolute; left:55%; top:-8px; width:2px; height:28px; background:#87CEEB; transform:rotate(15deg); animation: float 0.5s 0.2s infinite;"></div>
+                <div style="position:absolute; left:75%; top:-3px; width:2px; height:22px; background:#87CEEB; transform:rotate(15deg); animation: float 0.5s 0.3s infinite;"></div>
+            </div>
+
+            <!-- Shield glow around them -->
+            <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:160px; height:160px; border:3px solid rgba(255,215,0,0.3); border-radius:50%; animation: shield 2s infinite; z-index:2;"></div>
+        </div>
+
+        <div class="bubble narrator" style="bottom:3px;">
+            אחרי כל מה שעברו — שום סערה לא הפחידה אותם יותר.
+        </div>
+        <div class="sfx" style="top:50%; right:5%; font-size:1.2em; color:#ffd700; transform:rotate(5deg);">כוח #3: חוסן!</div>
+    </div>
+
+    <!-- Panel 9: Villains try to clone their friendship -->
+    <div class="panel wide" style="min-height:280px; background: linear-gradient(180deg, #1b0030 0%, #2d004d 50%, #0d0020 100%);">
+        <div class="panel-art">
+            <!-- Evil lab scene -->
+            <!-- Computer screens -->
+            <svg width="300" height="120" style="position:absolute; top:15%; left:50%; transform:translateX(-50%); z-index:1;">
+                <!-- Screen 1 -->
+                <rect x="5" y="10" width="80" height="60" fill="#0a0a1a" stroke="#9c27b0" stroke-width="2" rx="5"/>
+                <text x="45" y="35" text-anchor="middle" font-size="10" fill="#0f0" font-family="monospace">CLONE_v2</text>
+                <text x="45" y="50" text-anchor="middle" font-size="8" fill="#0f0" font-family="monospace">LOADING...</text>
+                <!-- Scan line -->
+                <rect x="7" y="12" width="76" height="2" fill="#0f03" style="animation: scan 2s linear infinite;"/>
+
+                <!-- Screen 2 -->
+                <rect x="110" y="10" width="80" height="60" fill="#0a0a1a" stroke="#9c27b0" stroke-width="2" rx="5"/>
+                <text x="150" y="30" text-anchor="middle" font-size="9" fill="#e040fb" font-family="monospace">FRIENDSHIP</text>
+                <text x="150" y="42" text-anchor="middle" font-size="9" fill="#e040fb" font-family="monospace">ALGORITHM</text>
+                <text x="150" y="55" text-anchor="middle" font-size="12" fill="#f44336">❌ FAILED</text>
+
+                <!-- Screen 3 -->
+                <rect x="215" y="10" width="80" height="60" fill="#0a0a1a" stroke="#9c27b0" stroke-width="2" rx="5"/>
+                <text x="255" y="35" text-anchor="middle" font-size="9" fill="#0f0" font-family="monospace">REPLICATE</text>
+                <text x="255" y="50" text-anchor="middle" font-size="9" fill="#f44336" font-family="monospace">ERROR 404</text>
+            </svg>
+
+            <!-- Evil scientist -->
+            <svg class="character" width="50" height="90" style="position:absolute; bottom:12%; right:18%;">
+                <rect x="10" y="38" width="26" height="30" rx="4" fill="#fff" stroke="#000" stroke-width="2"/>
+                <rect x="10" y="62" width="11" height="20" rx="2" fill="#333" stroke="#000" stroke-width="1.5"/>
+                <rect x="25" y="62" width="11" height="20" rx="2" fill="#333" stroke="#000" stroke-width="1.5"/>
+                <circle cx="23" cy="20" r="15" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                <path d="M8,15 Q12,3 23,1 Q34,3 38,15" fill="#fff" stroke="#000" stroke-width="2"/>
+                <!-- Glasses -->
+                <circle cx="17" cy="18" r="5" fill="none" stroke="#000" stroke-width="2"/>
+                <circle cx="29" cy="18" r="5" fill="none" stroke="#000" stroke-width="2"/>
+                <line x1="22" y1="18" x2="24" y2="18" stroke="#000" stroke-width="2"/>
+                <!-- Mad look -->
+                <circle cx="17" cy="18" r="2" fill="#000"/>
+                <circle cx="29" cy="18" r="2" fill="#000"/>
+            </svg>
+
+            <!-- Fake robot copies (broken) -->
+            <svg width="40" height="60" style="position:absolute; bottom:15%; left:15%;">
+                <rect x="8" y="20" width="24" height="25" fill="#78909c" stroke="#000" stroke-width="2" rx="3"/>
+                <circle cx="20" cy="10" r="12" fill="#90a4ae" stroke="#000" stroke-width="2"/>
+                <circle cx="14" cy="8" r="3" fill="#f44336"/><circle cx="26" cy="8" r="3" fill="#f44336"/>
+                <line x1="12" y1="16" x2="28" y2="16" stroke="#000" stroke-width="2"/>
+                <!-- Broken crack -->
+                <line x1="15" y1="3" x2="25" y2="15" stroke="#ff0" stroke-width="2"/>
+                <!-- Sparks -->
+                <text x="35" y="8" font-size="12" style="animation:flash 0.5s infinite alternate;">⚡</text>
+            </svg>
+            <svg width="40" height="60" style="position:absolute; bottom:15%; left:35%;">
+                <rect x="8" y="20" width="24" height="25" fill="#78909c" stroke="#000" stroke-width="2" rx="3"/>
+                <circle cx="20" cy="10" r="12" fill="#90a4ae" stroke="#000" stroke-width="2"/>
+                <circle cx="14" cy="8" r="3" fill="#f44336"/><circle cx="26" cy="8" r="3" fill="#f44336"/>
+                <line x1="12" y1="16" x2="28" y2="16" stroke="#000" stroke-width="2"/>
+                <line x1="10" y1="5" x2="20" y2="18" stroke="#ff0" stroke-width="2"/>
+                <text x="0" y="5" font-size="12" style="animation:flash 0.3s infinite alternate;">💥</text>
+            </svg>
+        </div>
+
+        <div class="bubble evil" style="top:10px; right:10%; max-width:35%;">
+            תשכפלו את הקשר ביניהם! תייצרו רובוטים!
+        </div>
+
+        <div class="bubble narrator" style="bottom:3px;">
+            ניסו לשכפל את החברות שלהם בתוכנה... אבל חברות אמיתית? אי אפשר להעתיק.
+        </div>
+    </div>
+
+    <div class="page-number">— עמוד 3 —</div>
+</div>
+
+<!-- ==================== PAGE 4: Mysterious Figures & Separation Attempt ==================== -->
+<div class="comic-page page-2col">
+
+    <!-- Panel 10: Mysterious figures trying to separate them -->
+    <div class="panel" style="min-height:300px; background: linear-gradient(180deg, #000 0%, #1a0520 100%);">
+        <div class="panel-art">
+            <!-- Shadow figures surrounding -->
+            <svg width="100%" height="100%" viewBox="0 0 250 280" style="position:absolute;">
+                <!-- Shadows closing in from edges -->
+                <g opacity="0.7">
+                    <!-- Left shadow -->
+                    <circle cx="30" cy="80" r="18" fill="#1a0520"/><rect x="18" y="96" width="24" height="30" fill="#1a0520" rx="3"/>
+                    <ellipse cx="24" cy="78" rx="4" ry="2.5" fill="#e040fb" opacity="0.8"/><ellipse cx="36" cy="78" rx="4" ry="2.5" fill="#e040fb" opacity="0.8"/>
+                    <!-- Right shadow -->
+                    <circle cx="220" cy="90" r="18" fill="#1a0520"/><rect x="208" y="106" width="24" height="30" fill="#1a0520" rx="3"/>
+                    <ellipse cx="214" cy="88" rx="4" ry="2.5" fill="#e040fb" opacity="0.8"/><ellipse cx="226" cy="88" rx="4" ry="2.5" fill="#e040fb" opacity="0.8"/>
+                    <!-- Top shadow -->
+                    <circle cx="125" cy="30" r="20" fill="#1a0520"/><rect x="112" y="48" width="26" height="32" fill="#1a0520" rx="3"/>
+                    <ellipse cx="118" cy="28" rx="5" ry="3" fill="#e040fb" opacity="0.8"/><ellipse cx="132" cy="28" rx="5" ry="3" fill="#e040fb" opacity="0.8"/>
+                </g>
+
+                <!-- John and Friend in center, holding hands -->
+                <g transform="translate(95, 120)">
+                    <!-- John -->
+                    <circle cx="18" cy="12" r="14" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                    <path d="M4,7 Q8,-2 18,-4 Q28,-2 32,7" fill="#8B4513" stroke="#000" stroke-width="2"/>
+                    <circle cx="13" cy="10" r="2" fill="#000"/><circle cx="23" cy="10" r="2" fill="#000"/>
+                    <rect x="6" y="25" width="24" height="22" fill="#4169E1" stroke="#000" stroke-width="2" rx="4"/>
+                    <!-- Hand reaching -->
+                    <rect x="30" y="30" width="12" height="6" fill="#FDBCB4" stroke="#000" stroke-width="1.5" rx="3"/>
+                </g>
+                <g transform="translate(135, 120)">
+                    <!-- Friend -->
+                    <circle cx="18" cy="12" r="14" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                    <path d="M4,7 Q8,-2 18,-4 Q28,-2 32,7" fill="#2c2c2c" stroke="#000" stroke-width="2"/>
+                    <circle cx="13" cy="10" r="2" fill="#000"/><circle cx="23" cy="10" r="2" fill="#000"/>
+                    <rect x="6" y="25" width="24" height="22" fill="#8B0000" stroke="#000" stroke-width="2" rx="4"/>
+                    <!-- Hand reaching back -->
+                    <rect x="-6" y="30" width="12" height="6" fill="#FDBCB4" stroke="#000" stroke-width="1.5" rx="3"/>
+                </g>
+                <!-- Hands clasped! -->
+                <circle cx="143" cy="153" r="8" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+            </svg>
+        </div>
+
+        <div class="bubble whisper" style="top:8px; left:50%; transform:translateX(-50%); max-width:50%; color:#e040fb; border-color:#9c27b0;">
+            תפרידו ביניהם... לבד הם חלשים...
+        </div>
+        <div class="sfx" style="bottom:15px; left:50%; transform:translateX(-50%); font-size:1.5em; color:#00bcd4; animation:glow 1.5s infinite;">!לעולם לא</div>
+    </div>
+
+    <!-- Panel 11: Building robots & algorithms together -->
+    <div class="panel" style="min-height:300px; background: linear-gradient(180deg, #0d47a1 0%, #1565c0 50%, #1976d2 100%);">
+        <div class="panel-art">
+            <!-- Workbench scene -->
+            <svg width="200" height="80" style="position:absolute; bottom:30%; left:50%; transform:translateX(-50%);">
+                <rect x="0" y="30" width="200" height="50" fill="#5d4037" stroke="#000" stroke-width="3" rx="3"/>
+                <!-- Tools on bench -->
+                <rect x="15" y="10" width="30" height="25" fill="#90a4ae" stroke="#000" stroke-width="2" rx="3"/>
+                <text x="30" y="28" text-anchor="middle" font-size="14">🔧</text>
+                <!-- Laptop -->
+                <rect x="60" y="5" width="40" height="28" fill="#263238" stroke="#000" stroke-width="2" rx="3"/>
+                <rect x="63" y="8" width="34" height="20" fill="#0d47a1" rx="2"/>
+                <text x="80" y="22" text-anchor="middle" font-size="8" fill="#0f0" font-family="monospace">&lt;/&gt;</text>
+                <rect x="55" y="33" width="50" height="4" fill="#37474f" stroke="#000" stroke-width="1" rx="2"/>
+                <!-- Robot being built -->
+                <g transform="translate(120, -10)">
+                    <circle cx="25" cy="15" r="12" fill="#b0bec5" stroke="#000" stroke-width="2"/>
+                    <circle cx="20" cy="13" r="3" fill="#00bcd4"/><circle cx="30" cy="13" r="3" fill="#00bcd4"/>
+                    <rect x="13" y="26" width="24" height="20" fill="#78909c" stroke="#000" stroke-width="2" rx="3"/>
+                    <text x="25" y="40" text-anchor="middle" font-size="10">❤️</text>
+                    <!-- Antenna -->
+                    <line x1="25" y1="3" x2="25" y2="-5" stroke="#000" stroke-width="2"/>
+                    <circle cx="25" cy="-7" r="3" fill="#f44336" style="animation: flash 0.5s infinite alternate;"/>
+                </g>
+            </svg>
+
+            <!-- John and friend working -->
+            <svg class="character" width="45" height="75" style="position:absolute; bottom:38%; left:20%;">
+                <circle cx="22" cy="15" r="13" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                <path d="M9,11 Q12,2 22,0 Q32,2 35,11" fill="#8B4513" stroke="#000" stroke-width="2"/>
+                <circle cx="17" cy="13" r="1.5" fill="#000"/><circle cx="27" cy="13" r="1.5" fill="#000"/>
+                <path d="M17,21 Q22,25 27,21" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+                <rect x="10" y="28" width="24" height="22" fill="#4169E1" stroke="#000" stroke-width="2" rx="4"/>
+            </svg>
+            <svg class="character" width="45" height="75" style="position:absolute; bottom:38%; right:20%;">
+                <circle cx="22" cy="15" r="13" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                <path d="M9,11 Q12,2 22,0 Q32,2 35,11" fill="#2c2c2c" stroke="#000" stroke-width="2"/>
+                <circle cx="17" cy="13" r="1.5" fill="#000"/><circle cx="27" cy="13" r="1.5" fill="#000"/>
+                <path d="M17,21 Q22,25 27,21" fill="none" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+                <rect x="10" y="28" width="24" height="22" fill="#8B0000" stroke="#000" stroke-width="2" rx="4"/>
+            </svg>
+
+            <!-- Sparkles of creation -->
+            <span style="position:absolute; top:12%; left:20%; font-size:16px; animation: twinkle 1s infinite;">⚡</span>
+            <span style="position:absolute; top:8%; right:25%; font-size:16px; animation: twinkle 1s 0.3s infinite;">✨</span>
+            <span style="position:absolute; top:20%; right:10%; font-size:16px; animation: twinkle 1s 0.6s infinite;">💡</span>
+        </div>
+
+        <div class="bubble narrator" style="bottom:3px;">
+            הם בנו קודים, רובוטים ואלגוריתמים — לא כדי להגן על עצמם, אלא כדי לעזור לעולם כולו.
+        </div>
+    </div>
+
+    <!-- Panel 12: EPIC final — standing together against everything -->
+    <div class="panel wide" style="min-height:320px; background: linear-gradient(180deg, #ff6f00 0%, #e65100 30%, #bf360c 60%, #3e2723 100%);">
+        <div class="panel-art">
+            <!-- Epic sunrise behind them -->
+            <div style="position:absolute; bottom:30%; left:50%; transform:translateX(-50%); width:250px; height:250px; background:radial-gradient(circle at 50% 80%, rgba(255,215,0,0.4) 0%, transparent 60%); border-radius:50%;"></div>
+
+            <!-- John and friend — epic hero poses -->
+            <div style="display:flex; gap:20px; z-index:3; align-items:flex-end;">
+                <!-- John — hero stance -->
+                <svg class="character" width="75" height="145">
+                    <rect x="16" y="58" width="38" height="48" rx="5" fill="#4169E1" stroke="#000" stroke-width="2.5"/>
+                    <!-- Cape! -->
+                    <polygon points="16,58 -5,120 16,106" fill="#1565c0" stroke="#000" stroke-width="2" style="animation: float 3s infinite;"/>
+                    <rect x="16" y="98" width="16" height="30" rx="3" fill="#34495e" stroke="#000" stroke-width="2"/>
+                    <rect x="38" y="98" width="16" height="30" rx="3" fill="#34495e" stroke="#000" stroke-width="2"/>
+                    <!-- Raised fist -->
+                    <rect x="52" y="35" width="14" height="35" rx="5" fill="#4169E1" stroke="#000" stroke-width="2" transform="rotate(-20,59,52)"/>
+                    <circle cx="58" cy="30" r="8" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                    <rect x="0" y="55" width="14" height="30" rx="5" fill="#4169E1" stroke="#000" stroke-width="2"/>
+                    <circle cx="7" cy="88" r="6" fill="#FDBCB4" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="35" cy="30" r="23" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                    <path d="M12,23 Q17,5 35,3 Q53,5 58,23" fill="#8B4513" stroke="#000" stroke-width="2.5"/>
+                    <ellipse cx="27" cy="27" rx="4" ry="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="28" cy="26" r="2.5" fill="#00bcd4"/>
+                    <ellipse cx="43" cy="27" rx="4" ry="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="42" cy="26" r="2.5" fill="#00bcd4"/>
+                    <path d="M25,38 Q35,46 45,38" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+                    <!-- Heart -->
+                    <text x="35" y="80" text-anchor="middle" font-size="16" style="animation: heartbeat 1.5s infinite;">❤️</text>
+                </svg>
+
+                <!-- Friend — hero stance -->
+                <svg class="character" width="75" height="145">
+                    <rect x="16" y="58" width="38" height="48" rx="5" fill="#8B0000" stroke="#000" stroke-width="2.5"/>
+                    <!-- Cape! -->
+                    <polygon points="54,58 75,120 54,106" fill="#b71c1c" stroke="#000" stroke-width="2" style="animation: float 3s 0.5s infinite;"/>
+                    <rect x="16" y="98" width="16" height="30" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                    <rect x="38" y="98" width="16" height="30" rx="3" fill="#2c3e50" stroke="#000" stroke-width="2"/>
+                    <!-- Raised fist -->
+                    <rect x="4" y="35" width="14" height="35" rx="5" fill="#8B0000" stroke="#000" stroke-width="2" transform="rotate(20,11,52)"/>
+                    <circle cx="8" cy="30" r="8" fill="#FDBCB4" stroke="#000" stroke-width="2"/>
+                    <rect x="56" y="55" width="14" height="30" rx="5" fill="#8B0000" stroke="#000" stroke-width="2"/>
+                    <circle cx="63" cy="88" r="6" fill="#FDBCB4" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="35" cy="30" r="23" fill="#FDBCB4" stroke="#000" stroke-width="2.5"/>
+                    <path d="M12,23 Q17,5 35,3 Q53,5 58,23" fill="#2c2c2c" stroke="#000" stroke-width="2.5"/>
+                    <ellipse cx="27" cy="27" rx="4" ry="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="28" cy="26" r="2.5" fill="#ff6f00"/>
+                    <ellipse cx="43" cy="27" rx="4" ry="4.5" fill="#fff" stroke="#000" stroke-width="1.5"/>
+                    <circle cx="42" cy="26" r="2.5" fill="#ff6f00"/>
+                    <path d="M25,38 Q35,46 45,38" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round"/>
+                    <text x="35" y="80" text-anchor="middle" font-size="16" style="animation: heartbeat 1.5s 0.3s infinite;">❤️</text>
+                </svg>
+            </div>
+
+            <!-- Epic sparkles -->
+            <span style="position:absolute; top:10%; left:15%; font-size:22px; animation: twinkle 1.2s infinite;">✨</span>
+            <span style="position:absolute; top:8%; right:18%; font-size:22px; animation: twinkle 1.2s 0.4s infinite;">✨</span>
+            <span style="position:absolute; top:25%; left:8%; font-size:18px; animation: twinkle 1.2s 0.8s infinite;">⭐</span>
+            <span style="position:absolute; top:20%; right:8%; font-size:18px; animation: twinkle 1.2s 1.2s infinite;">⭐</span>
+        </div>
+
+        <div class="bubble" style="top:8px; left:50%; transform:translateX(-50%); background:rgba(255,255,255,0.95); border-color:#ff6b35; max-width:65%; font-size:0.9em;">
+            <strong>אומץ. אמפתיה. יצירתיות.</strong><br>
+            החברות שלנו חזקה מכל מכשול — והעולם עוד לא ראה כלום.
+        </div>
+
+        <div style="position:absolute; bottom:12px; left:50%; transform:translateX(-50%); font-family:'Rubik Dirt',cursive; font-size:1.5em; color:#ffd700; text-shadow:2px 2px 0 #000; animation: pulse 1.5s infinite;">
+            ...ההרפתקה רק התחילה
+        </div>
+    </div>
+
+    <div class="page-number">— עמוד 4 — סוף פרק 2 —</div>
+</div>
+
+<!-- CREDITS -->
+<div style="text-align:center; color:#aaa; padding:30px; font-size:0.9em;">
+    <div style="font-size:1.4em; color:#00bcd4; font-weight:700;">✍️ נכתב על ידי: לירוי</div>
+    <br>
+    <div>🎨 עיצוב קומיקס: ג'וני צדקה 🧭</div>
+    <br>
+    <div style="color:#666;">© 2026 — כל הזכויות שמורות ליוצר</div>
+    <br>
+    <div class="nav" style="margin-top:20px;">
+        <a href="chapter1.html" class="inactive" style="border-color:#ff6b35; color:#ff6b35;">⬅️ חזרה לפרק 1</a>
+    </div>
+</div>
+
+</body>
+</html>
